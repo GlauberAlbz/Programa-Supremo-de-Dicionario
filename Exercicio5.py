@@ -18,36 +18,57 @@ from time import sleep
 
 sys("cls")
 
-pessoa = dict()
-pessoas = list()
+pessoadic = dict()
+pessoaslist = list()
 loop = True
 
 while loop == True:
     user_respo = str
     
+    pessoadic['nome'] = str(input("Digite o nome do individuo: "))
+    pessoadic['sexo'] = str(input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
+    while pessoadic['sexo'] != "M" and pessoadic['sexo'] != "F": #Possívelmente irei melhorar isso depois, o "Loop_idade" abaixo parece muito mais simples e fácil de se coomprender.
 
-    pessoa['nome'] = str(input("Digite o nome do individuo: "))
-    while pessoa['sexo'] != "M" and pessoa['sexo'] != "F":
-
-        pessoa['sexo'] = str(input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
-        if pessoa['sexo'] == "M":
-            print(f"{{pessoas['nome']}} é do sexo masculino. ")
-        elif pessoa['sexo'] == "F":
-            print(f"{{pessoas['nome']}} é do sexo feminino. ")
-        else:
-            print("Resposta inválida, tente novamente")
-            print(pessoa['sexo'])
+        print("Resposta inválida, tente novamente")
+        pessoadic['sexo'] = str(input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
         
-    pessoa['idade'] = int(input("Digite a idade do Individuo: "))
-    pessoas.append(pessoa.copy())
+    if pessoadic['sexo'] == "M":
+            print(f"{pessoadic['nome']} é do sexo masculino! ")
+
+    elif pessoadic['sexo'] == "F":
+        print(f"{pessoadic['nome']} é do sexo feminino. ")
+
+    #bloco a corrigir
+    loop_idade = False
+    while loop_idade == False:
+        
+        entradaIdade = (input("Digite a idade do Individuo: "))
+    
+        if entradaIdade.isdigit():
+
+            pessoadic['idade'] = int(entradaIdade)
+            print(f"A pessoa registrada possuí: {pessoadic['idade']} Anos!")
+            loop_idade = True
+
+        elif pessoadic['idade'] != entradaIdade:
+            entradaIdade = int()
+
+            if entradaIdade < 0:
+                print("Ué, essa pessoas está no útero da mãe ainda?")
+
+        else:
+            print("Digite uma idade Válida por favor.") #Possivelmente fazer um if dentro do Else KKKKKKKKKKKKKKK
+            
+    pessoaslist.append(pessoadic.copy())
 
     while user_respo != "S" and user_respo != "N":
-        user_respo = str(input('Deseja registrar outra pessoa? (S/N): ')).upper().strip()
+        user_respo = str(
+            input('Deseja registrar outra pessoa? (S/N): ')).upper().strip()
         if user_respo == 'N':
             loop = False
         elif user_respo == 'S':
             loop = True
         else:
             print("\nResposta inválida, tente novamente\n")
-print("calculo doidão hahaahahhahahaa\n")  
-print(pessoas) 
+print("calculo doidão hahaahahhahahaa\n")
+print(pessoaslist)
