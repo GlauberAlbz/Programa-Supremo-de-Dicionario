@@ -27,6 +27,8 @@ pink= "\033[38;5;198m"
 brown= "\033[38;5;130m"
 reset= "\033[0m" 
 
+loop= "S"
+
 nome= []
 genero= []
 nasc= []
@@ -36,23 +38,73 @@ contrato= []
 salario= []
 aposenta= []
 
-hj=dt.date.today()
-contribuicao= hj.year - contrato
-ctpsmodelo= "1"
-loop= "S"
-
 
 while loop == "S":
+    hj=dt.date.today()
+    ctpsmodelo= "1"
 
     nome= input("Digite seu nome: ")
-    nasc= input("Digite sua data de nascimento [DD/MM/AAA]: ")
+    
+    while True:
+        nasc = input("Digite sua data de nascimento [DD/MM/AAAA]: ")
+
+        # Verifica o formato básico
+        if len(nasc) != 10 or nasc[2] != '/' or nasc[5] != '/':
+            print("Use o formato DD/MM/AAAA.")
+            continue
+
+        dia, mes, ano = nasc.split('/')
+
+        # Verifica se todos são números
+        if not (dia.isdigit() and mes.isdigit() and ano.isdigit()):
+            print("Use apenas números na data.")
+            continue
+
+        dia = int(dia)
+        mes = int(mes)
+        ano = int(ano)
+
+        # Validação básica de faixa de valores
+        if ano < 1900 or ano > hj.year:
+            print("Ano inválido")
+            continue
+        if mes < 1 or mes > 12:
+            print("Mês inválido")
+            continue
+        # Dias válidos por mês
+        diasPorMes = [31, 29 if (ano % 4 == 0 and (ano % 100 != 0 or ano % 400 == 0)) else 28,
+                        31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if dia < 1 or dia >diasPorMes[mes - 1]:
+            print("Dia inválido para o mês informado")
+            continue
+
+        datanasc = dt.date(ano, mes, dia)
+
+        # Verifica se é futura ou idade absurda
+        if datanasc > hj:
+            print("A data de nascimento não pode ser no futuro")
+            continue
+        if hj.year - ano > 120:
+            print("Idade acima de 120 anos parece incorreta")
+            continue
+        break
+
     genero= (input("Digite seu gênero cadastrado no cartório [M/F]: ").upper())
+    
+    while genero not in ("M", "F"):
+        print("Gênero inválido.")
+        genero= (input("Digite seu gênero cadastrado no cartório [M/F]: ").upper())
 
     datanasc = dt.datetime.strptime(nasc, "%d/%m/%Y").date()
     idade = hj.year - datanasc.year - ((hj.month, hj.day) < (datanasc.month, datanasc.day))
 
     while ctpsmodelo not in ("0", ""):
         ctpsmodelo= (input("O modelo da sua CTPS é antigo ou novo? [Digite '?' para mais informações][A -> Antigo/ N -> Novo]: ").upper())
+
+        if ctpsmodelo not in ("0", "", "A", "N", "?", "1"):
+            print("Carteira de trabalho inválida")
+            continue
+        
         if ctpsmodelo == 'N':
             while True:
                 ctps = input("Digite seu CPF [Sem pontos, traços ou espaços - 11 dígitos]: ")
@@ -61,6 +113,7 @@ while loop == "S":
                 else:
                     print("ERRO: O CPF deve ter exatamente 11 dígitos numéricos. Tente novamente.")
             break  
+        
         elif ctpsmodelo == 'A':
             while True:
                 ct = input("Digite o número da sua carteira de trabalho [7 dígitos]: ")
@@ -76,14 +129,28 @@ while loop == "S":
                     print("ERRO: A série da CTPS deve ter exatamente 4 dígitos numéricos. Tente novamente.")
             ctps= ct+ps
             break
+        
         elif ctpsmodelo == '?':
             print("Número da CTPS Digital (novo) -> Use o CPF para registro e consulta.\nNúmero da CTPS Antiga (antigo) -> Use o Número e Série que constam na página de identificação do documento físico.")
+        
         elif ctpsmodelo == "":
             ctpsmodelo = "0"
 
     if ctpsmodelo not in ("0", ""):
-        contrato = input("Digite o ano de contratação do seu contrato atual: [AAAA]")
-        salario = input("Digite seu último sálario: ")
+
+        contrato = int(input("Digite o ano de contratação do seu contrato atual [AAAA]: "))
+        while contrato < hj.year - 100 or contrato > hj.year:
+            print("Ano de contratação inválido")
+            contrato = int(input("Digite o ano de contratação do seu contrato atual [AAAA]: "))
+
+        inicio = int(input("Digite o ano de inicio de sua contribuição para a previdência [AAAA]: "))
+        while inicio < hj.year - 100 or inicio > hj.year:
+            print("Ano de contratação inválido")
+            inicio = int(input("Digite o ano de inicio de sua contribuição para a previdência [AAAA]: "))
+
+        salario = float(input("Digite seu último sálario: "))
+        
+        contribuicao= hj.year - inicio
         
         if genero == "M":
             idademin= 65
@@ -93,8 +160,16 @@ while loop == "S":
             idademin= 62
             contribmin= 15
 
-        
-       
+        if idade >= idademin and contribuicao >= contribmin:
+            aposenta= hj.year
+
+        else:
+            faltaIdade= max(0, idademin - idade)
+            faltaContrib= max(0, contribmin - contribuicao)
+            falta= max(faltaIdade, faltaContrib)
+            aposenta= hj.year + falta
+
+            print(aposenta)
 
     loop= (input("Deseja cadastrar outra pessoa? [S/N] ").upper())
 
