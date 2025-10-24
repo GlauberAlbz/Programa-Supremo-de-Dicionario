@@ -106,8 +106,16 @@ for letra in f'{lista_jogadores[3]['dado']} no dado.':
     sleep(0.05)
 print()
 
+# Ranking dos Jogadores
 for letra in 'O ranking dos jogadores:':
     print(letra, end='', flush=True)
     sleep(0.05)
 
-            
+# Cálculo do ranking dos jogadores
+
+lista_jogadores.sort(reverse=True)
+
+print(f'1º Colocado: {lista_jogadores[]['nick'} ')
+print(f'2º Colocado: {lista_jogadores[]['nick'} ')
+print(f'3º Colocado: {lista_jogadores[]['nick'} ')
+print(f'4º Colocado: {lista_jogadores[]['nick'} ')
