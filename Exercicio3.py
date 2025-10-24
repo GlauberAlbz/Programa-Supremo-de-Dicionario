@@ -27,22 +27,31 @@ pink= "\033[38;5;198m"
 brown= "\033[38;5;130m"
 reset= "\033[0m" 
 
-nomes= []
-nascs= []
-ctpss= []
-idades= []
-contratos= []
-salarios= []
-aposentas= []
+nome= []
+genero= []
+nasc= []
+ctps= []
+idade= []
+contrato= []
+salario= []
+aposenta= []
+
+hj=dt.date.today()
+contribuicao= hj.year - contrato
 ctpsmodelo= "1"
 loop= "S"
 
 
 while loop == "S":
-    nome= input("Digite seu nome: ")
-    nasc= input("Digite sua data de nascimento: ")
 
-    while ctpsmodelo != "0" or "":
+    nome= input("Digite seu nome: ")
+    nasc= input("Digite sua data de nascimento [DD/MM/AAA]: ")
+    genero= (input("Digite seu gênero cadastrado no cartório [M/F]: ").upper())
+
+    datanasc = dt.datetime.strptime(nasc, "%d/%m/%Y").date()
+    idade = hj.year - datanasc.year - ((hj.month, hj.day) < (datanasc.month, datanasc.day))
+
+    while ctpsmodelo not in ("0", ""):
         ctpsmodelo= (input("O modelo da sua CTPS é antigo ou novo? [Digite '?' para mais informações][A -> Antigo/ N -> Novo]: ").upper())
         if ctpsmodelo == 'N':
             while True:
@@ -72,17 +81,26 @@ while loop == "S":
         elif ctpsmodelo == "":
             ctpsmodelo = "0"
 
-    if ctpsmodelo != "0" or "":
-        contratos = input("Digite o ano de contratação do seu contrato atual: ")
+    if ctpsmodelo not in ("0", ""):
+        contrato = input("Digite o ano de contratação do seu contrato atual: [AAAA]")
         salario = input("Digite seu último sálario: ")
+        
+        if genero == "M":
+            idademin= 65
+            contribmin= 20
+            
+        elif genero == "F":
+            idademin= 62
+            contribmin= 15
+
+        
+       
 
     loop= (input("Deseja cadastrar outra pessoa? [S/N] ").upper())
 
-    while loop != "N" or "S":
+    while loop not in ("S", "N"):
         print("Digite uma opção válida")
         loop= (input("Deseja cadastrar outra pessoa? [S/N] ").upper())
-        if loop == "N" or "S":
-            break
 
     if loop == "N":
         break
