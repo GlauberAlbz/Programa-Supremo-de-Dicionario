@@ -38,62 +38,21 @@ for c in range(0,4):
         input('Pressione ENTER para prosseguir...')
 
 
-for letra in 'O resultado dos jogadores são:':
-    print(letra, end='', flush=True)
-    sleep(0.05)
-print()
+# Exibição do resultado
+print('O resultado dos jogadores são:')
 
-# Jogador 1:
-for letra in f'{lista_jogadores[0]['nick']} tirou ':
-    print(letra, end='', flush=True)
-    sleep(0.1)
-sleep(1)
-for letra in f'{lista_jogadores[0]['dado']} no dado.':
-    print(letra, end='', flush=True)
-    sleep(0.05)
-print()
+print(f'{lista_jogadores[0]['nick']} tirou {lista_jogadores[0]['dado']} no dado')
+print(f'{lista_jogadores[1]['nick']} tirou {lista_jogadores[1]['dado']} no dado')
+print(f'{lista_jogadores[2]['nick']} tirou {lista_jogadores[2]['dado']} no dado')
+print(f'{lista_jogadores[3]['nick']} tirou {lista_jogadores[3]['dado']} no dado')
 
-# Jogador 2:
-for letra in f'{lista_jogadores[1]['nick']} tirou ':
-    print(letra, end='', flush=True)
-    sleep(0.1)
-sleep(1)
-for letra in f'{lista_jogadores[1]['dado']} no dado.':
-    print(letra, end='', flush=True)
-    sleep(0.05)
-print()
-
-# Jogador 3:
-for letra in f'{lista_jogadores[2]['nick']} tirou ':
-    print(letra, end='', flush=True)
-    sleep(0.1)
-sleep(1)
-for letra in f'{lista_jogadores[2]['dado']} no dado.':
-    print(letra, end='', flush=True)
-    sleep(0.05)
-print()
-
-# Jogador 4:
-for letra in f'{lista_jogadores[3]['nick']} tirou ':
-    print(letra, end='', flush=True)
-    sleep(0.1)
-sleep(1)
-for letra in f'{lista_jogadores[3]['dado']} no dado.':
-    print(letra, end='', flush=True)
-    sleep(0.05)
-print()
 
 # Ranking dos Jogadores
-for letra in 'O ranking dos jogadores:':
-    print(letra, end='', flush=True)
-    sleep(0.05)
+print('O ranking dos jogadores:')
 
 # Cálculo do ranking dos jogadores
-
-lista_jogadores.sort(reverse=True)
-print(lista_jogadores)
-
-print(f'1º Colocado: {lista_jogadores[]['nick'} ')
-print(f'2º Colocado: {lista_jogadores[]['nick'} ')
-print(f'3º Colocado: {lista_jogadores[]['nick'} ')
-print(f'4º Colocado: {lista_jogadores[]['nick'} ')
+lista_valores_dados = list()
+for values in range(0,4):
+    lista_valores_dados.append(lista_jogadores[values])
+lista_valores_dados.sort(reverse=True)
+print(lista_valores_dados)
