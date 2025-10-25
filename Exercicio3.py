@@ -29,31 +29,35 @@ reset= "\033[0m"
 
 loop= "S"
 
-nome= []
-genero= []
-nasc= []
-ctps= []
-idade= []
-contrato= []
-salario= []
-aposenta= []
+pessoa = {
+    "nome": "",
+    "genero": "",
+    "nasc": "",
+    "ctps": "",
+    "idade": "",
+    "contrato": "",
+    "salario": "",
+    "aposenta": "",
+    "contribuicao": ""
+    }
+    
 
 
 while loop == "S":
     hj=dt.date.today()
     ctpsmodelo= "1"
 
-    nome= input("Digite seu nome: ")
+    pessoa["nome"]= input("Digite seu nome: ")
     
     while True:
-        nasc = input("Digite sua data de nascimento [DD/MM/AAAA]: ")
+        pessoa["nasc"] = input("Digite sua data de nascimento [DD/MM/AAAA]: ")
 
         # Verifica o formato básico
-        if len(nasc) != 10 or nasc[2] != '/' or nasc[5] != '/':
+        if len(pessoa["nasc"]) != 10 or pessoa["nasc"][2] != '/' or pessoa["nasc"][5] != '/':
             print("Use o formato DD/MM/AAAA.")
             continue
 
-        dia, mes, ano = nasc.split('/')
+        dia, mes, ano = pessoa["nasc"].split('/')
 
         # Verifica se todos são números
         if not (dia.isdigit() and mes.isdigit() and ano.isdigit()):
@@ -89,14 +93,13 @@ while loop == "S":
             continue
         break
 
-    genero= (input("Digite seu gênero cadastrado no cartório [M/F]: ").upper())
+    pessoa["genero"]= (input("Digite seu gênero cadastrado no cartório [M/F]: ").upper())
     
-    while genero not in ("M", "F"):
+    while pessoa["genero"] not in ("M", "F"):
         print("Gênero inválido.")
-        genero= (input("Digite seu gênero cadastrado no cartório [M/F]: ").upper())
+        pessoa["genero"]= (input("Digite seu gênero cadastrado no cartório [M/F]: ").upper())
 
-    datanasc = dt.datetime.strptime(nasc, "%d/%m/%Y").date()
-    idade = hj.year - datanasc.year - ((hj.month, hj.day) < (datanasc.month, datanasc.day))
+    pessoa["idade"] = hj.year - datanasc.year - ((hj.month, hj.day) < (datanasc.month, datanasc.day))
 
     while ctpsmodelo not in ("0", ""):
         ctpsmodelo= (input("O modelo da sua CTPS é antigo ou novo? [Digite '?' para mais informações][A -> Antigo/ N -> Novo]: ").upper())
@@ -107,8 +110,8 @@ while loop == "S":
         
         if ctpsmodelo == 'N':
             while True:
-                ctps = input("Digite seu CPF [Sem pontos, traços ou espaços - 11 dígitos]: ")
-                if len(ctps) == 11 and ctps.isdigit():
+                pessoa["ctps"] = input("Digite seu CPF [Sem pontos, traços ou espaços - 11 dígitos]: ")
+                if len(pessoa["ctps"]) == 11 and pessoa["ctps"].isdigit():
                     break  
                 else:
                     print("ERRO: O CPF deve ter exatamente 11 dígitos numéricos. Tente novamente.")
@@ -120,14 +123,14 @@ while loop == "S":
                 if len(ct) == 7 and ct.isdigit():
                     break
                 else:
-                    print("ERRO: O número da CTPS deve ter exatamente 7 dígitos numéricos. Tente novamente.")
+                    print("O número da CTPS deve ter exatamente 7 dígitos numéricos. Tente novamente.")
             while True:
                 ps = input("Digite a série da sua carteira de trabalho [4 dígitos]: ")
                 if len(ps) == 4 and ps.isdigit():
                     break 
                 else:
-                    print("ERRO: A série da CTPS deve ter exatamente 4 dígitos numéricos. Tente novamente.")
-            ctps= ct+ps
+                    print("A série da CTPS deve ter exatamente 4 dígitos numéricos. Tente novamente.")
+            pessoa["ctps"]= ct+ps
             break
         
         elif ctpsmodelo == '?':
@@ -138,38 +141,44 @@ while loop == "S":
 
     if ctpsmodelo not in ("0", ""):
 
-        contrato = int(input("Digite o ano de contratação do seu contrato atual [AAAA]: "))
-        while contrato < hj.year - 100 or contrato > hj.year:
+        pessoa["contrato"] = int(input("Digite o ano de contratação do seu contrato atual [AAAA]: "))
+        while pessoa["contrato"] < hj.year - 100 or pessoa["contrato"] > hj.year or pessoa["contrato"] < ano:
             print("Ano de contratação inválido")
-            contrato = int(input("Digite o ano de contratação do seu contrato atual [AAAA]: "))
+            pessoa["contrato"] = int(input("Digite o ano de contratação do seu contrato atual [AAAA]: "))
 
         inicio = int(input("Digite o ano de inicio de sua contribuição para a previdência [AAAA]: "))
-        while inicio < hj.year - 100 or inicio > hj.year:
+        while inicio < hj.year - 100 or inicio > hj.year or inicio < ano:
             print("Ano de contratação inválido")
             inicio = int(input("Digite o ano de inicio de sua contribuição para a previdência [AAAA]: "))
 
-        salario = float(input("Digite seu último sálario: "))
+        pessoa["salario"] = (input("Digite seu último sálario: "))
+
+        while not pessoa["salario"].isdigit():
+            print("Use apenas números")
+            pessoa["salario"] = (input("Digite seu último sálario: "))
+
+        pessoa["salario"] = float(pessoa["salario"])
         
-        contribuicao= hj.year - inicio
+        pessoa["contribuicao"]= hj.year - inicio
         
-        if genero == "M":
+        if pessoa["genero"] == "M":
             idademin= 65
             contribmin= 20
             
-        elif genero == "F":
+        elif pessoa["genero"] == "F":
             idademin= 62
             contribmin= 15
 
-        if idade >= idademin and contribuicao >= contribmin:
-            aposenta= hj.year
+        if pessoa["idade"] >= idademin and pessoa["contribuicao"] >= contribmin:
+            pessoa["aposenta"]= hj.year
 
         else:
-            faltaIdade= max(0, idademin - idade)
-            faltaContrib= max(0, contribmin - contribuicao)
+            faltaIdade= max(0, idademin - pessoa["idade"])
+            faltaContrib= max(0, contribmin - pessoa["contribuicao"])
             falta= max(faltaIdade, faltaContrib)
-            aposenta= hj.year + falta
+            pessoa["aposenta"]= hj.year + falta
 
-            print(aposenta)
+            print(pessoa["aposenta"])
 
     loop= (input("Deseja cadastrar outra pessoa? [S/N] ").upper())
 
