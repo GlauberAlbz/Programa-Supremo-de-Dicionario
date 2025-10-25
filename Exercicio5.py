@@ -24,41 +24,63 @@ loop = True
 
 while loop == True:
     user_respo = str
-    
-    pessoadic['nome'] = str(input("Digite o nome do individuo: "))
+    loop_nome = False
+    while loop_nome == False:
+
+        entradanome = str(input("Digite o nome do individuo: ")).capitalize()
+
+        if entradanome.replace(" ", "").isalpha():
+            pessoadic['nome'] = entradanome
+            loop_nome = True
+        else:
+            print("Números e Caracteres desse tipo não são permitidos....")
+
     pessoadic['sexo'] = str(input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
-    while pessoadic['sexo'] != "M" and pessoadic['sexo'] != "F": #Possívelmente irei melhorar isso depois, o "Loop_idade" abaixo parece muito mais simples e fácil de se coomprender.
+    
+    while pessoadic['sexo'] != "M" and pessoadic['sexo'] != "F":
 
         print("Resposta inválida, tente novamente")
-        pessoadic['sexo'] = str(input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
-        
+        pessoadic['sexo'] = str(
+            input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
+
     if pessoadic['sexo'] == "M":
-            print(f"{pessoadic['nome']} é do sexo masculino! ")
+        print(f"{pessoadic['nome']} é do sexo masculino! ")
 
     elif pessoadic['sexo'] == "F":
         print(f"{pessoadic['nome']} é do sexo feminino. ")
 
-    #bloco a corrigir
     loop_idade = False
     while loop_idade == False:
-        
+
         entradaIdade = (input("Digite a idade do Individuo: "))
     
         if entradaIdade.isdigit():
+            entradaIdade = int(entradaIdade)
 
-            pessoadic['idade'] = int(entradaIdade)
-            print(f"A pessoa registrada possuí: {pessoadic['idade']} Anos!")
-            loop_idade = True
+            if entradaIdade > 116:
+                print('A pessoa mais velha do mundo possuí 116 anos atualmente, digite uma idade onde a pessoa possa estar viva.')
 
-        elif pessoadic['idade'] != entradaIdade:
-            entradaIdade = int()
+            elif entradaIdade == 0 and pessoadic['sexo'] == "F":
+                pessoadic['idade'] = int(entradaIdade) 
+                print(f" vou considerar que a {pessoadic['nome']} tem alguns meses de idade...")
+                loop_idade = True
+            elif entradaIdade == 0 and pessoadic['sexo'] == "M":
+                pessoadic['idade'] = int(entradaIdade) 
+                print(f"vou considerar que o {pessoadic['nome']} tem alguns meses de idade...")
+                loop_idade = True
 
-            if entradaIdade < 0:
-                print("Ué, essa pessoas está no útero da mãe ainda?")
+            elif entradaIdade == 1:
+                pessoadic['idade'] = int(entradaIdade)
+                print(f"{pessoadic['nome']} possuí {pessoadic['idade']} Ano de idade!")
+                loop_idade = True
+            elif entradaIdade > 0:
+                pessoadic['idade'] = int(entradaIdade)
+                print(f"{pessoadic['nome']} possuí {pessoadic['idade']} Anos!")
+                loop_idade = True
 
         else:
-            print("Digite uma idade Válida por favor.") #Possivelmente fazer um if dentro do Else KKKKKKKKKKKKKKK
-            
+            print("Digite uma idade Válida por favor.")
+        
     pessoaslist.append(pessoadic.copy())
 
     while user_respo != "S" and user_respo != "N":
@@ -70,5 +92,7 @@ while loop == True:
             loop = True
         else:
             print("\nResposta inválida, tente novamente\n")
-print("calculo doidão hahaahahhahahaa\n")
+
 print(pessoaslist)
+
+
