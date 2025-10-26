@@ -46,13 +46,15 @@ print(f'{lista_jogadores[1]['nick']} tirou {lista_jogadores[1]['dado']} no dado'
 print(f'{lista_jogadores[2]['nick']} tirou {lista_jogadores[2]['dado']} no dado')
 print(f'{lista_jogadores[3]['nick']} tirou {lista_jogadores[3]['dado']} no dado')
 
+# Cálculo do ranking dos jogadores
+for i in range(len(lista_jogadores)):
+    for j in range(i + 1, len(lista_jogadores)):
+        if lista_jogadores[i]['dado'] < lista_jogadores[j]['dado']:
+            lista_jogadores[i], lista_jogadores[j] = lista_jogadores[j], lista_jogadores[i]
 
 # Ranking dos Jogadores
-print('O ranking dos jogadores:')
-
-# Cálculo do ranking dos jogadores
-lista_valores_dados = list()
-for values in range(0,4):
-    lista_valores_dados.append(lista_jogadores[values])
-lista_valores_dados.sort(reverse=True)
-print(lista_valores_dados)
+print('🏆 O ranking dos jogadores:')
+print(f'1º lugar: {lista_jogadores[0]['nick']} com {lista_jogadores[0]['dado']}')
+print(f'2º lugar: {lista_jogadores[1]['nick']} com {lista_jogadores[1]['dado']}')
+print(f'3º lugar: {lista_jogadores[2]['nick']} com {lista_jogadores[2]['dado']}')
+print(f'4º lugar: {lista_jogadores[3]['nick']} com {lista_jogadores[3]['dado']}')
