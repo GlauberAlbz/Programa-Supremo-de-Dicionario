@@ -34,6 +34,8 @@ for c in range(0,4):
     print('O jogador que tirar o maior valor vence o jogo!')
     input('Se estiver pronto para começar pressione ENTER...\n')
 
+    sys('cls')
+
     for letra in '🎲 Vamos rolar os dados! 🎲':
         print(letra, end='', flush=True)
         sleep(0.05)
@@ -60,6 +62,7 @@ for c in range(0,4):
         print(f'Que incrível {lista_jogadores[c]['nick']}!!! Você tirou {lista_jogadores[c]['dado']}!!!')
         input('Pressione ENTER para prosseguir...')
 
+sys('cls')
 
 for letra in 'O resultado dos jogadores são:':
     print(letra, end='', flush=True)
@@ -106,16 +109,18 @@ for letra in f'{lista_jogadores[3]['dado']} no dado.':
     sleep(0.05)
 print()
 
-# Ranking dos Jogadores
-for letra in 'O ranking dos jogadores:':
-    print(letra, end='', flush=True)
-    sleep(0.05)
+sys('cls')
 
 # Cálculo do ranking dos jogadores
+for i in range(len(lista_jogadores)):
+    for j in range(i + 1, len(lista_jogadores)):
+        if lista_jogadores[i]['dado'] < lista_jogadores[j]['dado']:
+            lista_jogadores[i], lista_jogadores[j] = lista_jogadores[j], lista_jogadores[i]
 
-lista_jogadores.sort(reverse=True)
+# Ranking dos Jogadores
+print('🏆 O ranking dos jogadores:')
+print(f'1º lugar: {lista_jogadores[0]['nick']} com {lista_jogadores[0]['dado']}')
+print(f'2º lugar: {lista_jogadores[1]['nick']} com {lista_jogadores[1]['dado']}')
+print(f'3º lugar: {lista_jogadores[2]['nick']} com {lista_jogadores[2]['dado']}')
+print(f'4º lugar: {lista_jogadores[3]['nick']} com {lista_jogadores[3]['dado']}')
 
-print(f'1º Colocado: {lista_jogadores[]['nick'} ')
-print(f'2º Colocado: {lista_jogadores[]['nick'} ')
-print(f'3º Colocado: {lista_jogadores[]['nick'} ')
-print(f'4º Colocado: {lista_jogadores[]['nick'} ')
