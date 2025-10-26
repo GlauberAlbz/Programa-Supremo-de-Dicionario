@@ -23,7 +23,8 @@ pessoaslist = list()
 loop = True
 
 while loop == True:
-    user_respo = str
+    user_respo = str()
+
     loop_nome = False
     while loop_nome == False:
 
@@ -93,6 +94,37 @@ while loop == True:
         else:
             print("\nResposta inválida, tente novamente\n")
 
-print(pessoaslist)
+quantidadePessoas = len(pessoaslist)
+
+
+premedia = int(0)
+contmedia = int(0)
+for idades in pessoaslist:
+    premedia += idades["idade"]
+    contmedia += 1
+media = int(premedia / contmedia)
+
+
+
+mulhereslist = list()
+for mulheres in pessoaslist:
+    if mulheres["sexo"] == "F":
+        mulhereslist.append(mulheres.copy())
+
+acimaMedia = list()
+for m in pessoaslist:
+    if m["idade"] > media:
+        acimaMedia.append(m.copy())
+
+
+print(f"{quantidadePessoas} pessoas foram cadastradas\n")
+
+print(f"A média de idade entre essas pessoas é: {media}")
+
+print(mulhereslist)
+
+print(acimaMedia)
+
+
 
 
