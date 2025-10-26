@@ -13,6 +13,18 @@
         D) Uma lista de pessoas com idade acima da média
 '''
 
+black= "\033[0;30m" 
+red= "\033[0;31m"
+green= "\033[0;32m"
+yellow= "\033[0;33m" 
+blue= "\033[0;34m"
+purple= "\033[0;35m"
+cyan= "\033[0;36m"
+orange = "\033[38;5;208m" 
+pink= "\033[38;5;198m"
+brown= "\033[38;5;130m"
+reset= "\033[0m" 
+
 from os import system as sys
 from time import sleep
 
@@ -22,20 +34,31 @@ pessoadic = dict()
 pessoaslist = list()
 loop = True
 
+
+
 while loop == True:
     user_respo = str()
 
     loop_nome = False
     while loop_nome == False:
 
+        print((cyan) + '╔' + '═' * 73 + '╗')
+        print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
+        print('╚' + '═' * 73 + '╝\n' + reset)
         entradanome = str(input("Digite o nome do individuo: ")).capitalize()
 
         if entradanome.replace(" ", "").isalpha():
             pessoadic['nome'] = entradanome
             loop_nome = True
+            sys("cls")
         else:
             print("Números e Caracteres desse tipo não são permitidos....")
+            sleep(1)
+            sys("cls")
 
+    print((cyan) + '╔' + '═' * 73 + '╗')
+    print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
+    print('╚' + '═' * 73 + '╝\n' + reset)
     pessoadic['sexo'] = str(input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
     
     while pessoadic['sexo'] != "M" and pessoadic['sexo'] != "F":
@@ -121,9 +144,26 @@ print(f"{quantidadePessoas} pessoas foram cadastradas\n")
 
 print(f"A média de idade entre essas pessoas é: {media}")
 
-print(mulhereslist)
+tem_mulher = False
+for pessoa in pessoaslist:
+    if pessoa["sexo"] == "F":
+        tem_mulher = True
+        break
+    else:
+        print("essa lista não possuí mulheres")
 
-print(acimaMedia)
+if tem_mulher == True:
+    for m in mulhereslist:
+        print(m["nome"])
+
+
+
+if contmedia > 1:
+    for pessoa in acimaMedia:
+        print(f"{pessoa['nome']} com {pessoa['idade']} anos")
+else:
+    print("Essa lista possuí apenas 1 candidato, logo ninguém está acima da média.")
+
 
 
 
