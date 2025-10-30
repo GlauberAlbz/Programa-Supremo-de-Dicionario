@@ -28,8 +28,19 @@ reset= "\033[0m"
 alunos_EFI = list() # Ensino Fundamental I
 alunos_EFII = list() # Ensino Fundamental II
 alunos_EM = list() # Ensino Médio
-alunos = [alunos_EFI, alunos_EFII, alunos_EM]
 aluno = dict()
+
+bimestre_1_EF = dict()
+bimestre_2_EF = dict()
+bimestre_3_EF = dict()
+bimestre_4_EF = dict()
+boletim_EF = [bimestre_1_EF, bimestre_2_EF, bimestre_3_EF, bimestre_4_EF]
+
+bimestre_1_EM = dict()
+bimestre_2_EM = dict()
+bimestre_3_EM = dict()
+bimestre_4_EM = dict()
+boletim_EM = [bimestre_1_EM, bimestre_2_EM, bimestre_3_EM, bimestre_4_EM]
 
 print('Bem vindo!')
 print('Programa de notas.')
@@ -37,7 +48,7 @@ print('Programa de notas.')
 loopprincipal = True
 
 while loopprincipal == True:
-
+    analise = True
     cadastrar = str(input('Você deseja cadastrar um aluno? S/N'))
 
     if cadastrar == 'S':
@@ -69,3 +80,11 @@ while loopprincipal == True:
             cadastrar = True
         else:
             cadastrar = False
+    
+    while analise == True:
+        analise_escolaridade = str(input('O aluno que você deseja analisar é de qual escolaridade? (EFI/EFII/EM) '))
+
+        if analise_escolaridade == 'EFI':
+            for aluno in alunos_EFI:
+                print(f'O aluno {aluno['Nome']} está no {aluno['Grade']} ano do {aluno['Escolaridade']}')
+        
