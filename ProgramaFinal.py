@@ -132,8 +132,8 @@ while looppai == True:
 
     sys("cls")
 
-    casos = str(input("Qual programa deseja rodar?"))
-    # Glauber - Programa
+    casos = str(input("Qual programa deseja rodar?")).strip()
+    
     match casos:
         case "1":
             1
@@ -144,7 +144,224 @@ while looppai == True:
         case "4":
             4
         case "5":
-            5
+            
+
+
+            sys("cls")
+
+            pessoadic = dict()
+            pessoaslist = list()
+            loop5 = True
+
+
+
+            while loop5 == True:
+                sys('cls')
+                user_respo = str()
+
+                loop_nome = False
+                while loop_nome == False:
+
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    entradanome = str(input("Digite o nome do individuo: ")).capitalize()
+
+                    if entradanome.replace(" ", "").isalpha():
+                        pessoadic['nome'] = entradanome
+                        loop_nome = True
+                        sys("cls")
+                    else:
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'Números e Caracteres desse tipo não são permitidos....'.center(73) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝' + reset)
+                        input("Pressione ENTER para continuar...")
+                        sys("cls")
+
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
+                print('╚' + '═' * 73 + '╝' + reset)
+                pessoadic['sexo'] = str(input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
+                
+                while pessoadic['sexo'] != "M" and pessoadic['sexo'] != "F":
+                    print((red) + '╔' + '═' * 73 + '╗')
+                    print('║' + (yellow) + f'Resposta inválida, tente novamente'.center(73) + (red) + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    input("Pressione ENTER para continuar...")
+                    sys("cls")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    pessoadic['sexo'] = str(input("Digite o sexo do Individuo: (M/F) ")).upper().strip()
+
+                if pessoadic['sexo'] == "M":
+                    sys("cls")
+                    print((blue) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + f'{pessoadic['nome']} é do sexo masculino!..'.center(73) + (blue) + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    input("Pressione ENTER para continuar...")
+
+                elif pessoadic['sexo'] == "F":
+                    sys("cls")
+                    print((pink) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + f'{pessoadic['nome']} é do sexo feminino!..'.center(73) + (pink) + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    input("Pressione ENTER para continuar...")
+                    
+                loop_idade = False
+                while loop_idade == False:
+                    sys("cls")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    
+                    entradaIdade = (input("Digite a idade do Individuo: "))
+                    sys("cls")
+
+                    if entradaIdade.isdigit():
+                        entradaIdade = int(entradaIdade)
+
+                        if entradaIdade > 116:
+                            
+                            print((red) + '╔' + '═' * 105 + '╗')
+                            print('║' + (yellow) + f'A pessoa mais velha do mundo possuí 116 anos atualmente, digite uma idade onde a pessoa possa estar viva.'.center(73) + (red) + '║')
+                            print('╚' + '═' * 105 + '╝' + reset)
+                            input("Pressione ENTER para continuar...")
+
+                        elif entradaIdade == 0 and pessoadic['sexo'] == "F":
+                            pessoadic['idade'] = int(entradaIdade)
+                            print((pink) + '╔' + '═' * 73 + '╗')
+                            print('║' + (reset) + f'vou considerar que a {pessoadic['nome']} tem alguns meses de idade'.center(73) + (pink) + '║')
+                            print('╚' + '═' * 73 + '╝' + reset)
+                            input("Pressione ENTER para continuar...")
+                            loop_idade = True
+                        elif entradaIdade == 0 and pessoadic['sexo'] == "M":
+                            pessoadic['idade'] = int(entradaIdade) 
+                            print((blue) + '╔' + '═' * 73 + '╗')
+                            print('║' + (reset) + f'vou considerar que o {pessoadic['nome']} tem alguns meses de idade.'.center(73) + (blue) + '║')
+                            print('╚' + '═' * 73 + '╝' + reset)
+                            input("Pressione ENTER para continuar...")
+                            loop_idade = True
+
+                        elif entradaIdade == 1:
+                            pessoadic['idade'] = int(entradaIdade)
+                            print((cyan) + '╔' + '═' * 73 + '╗')
+                            print('║' + (reset) + f'{pessoadic['nome']} possuí {pessoadic['idade']} Ano de idade!'.center(73) + (cyan) + '║')
+                            print('╚' + '═' * 73 + '╝' + reset)
+                            input("Pressione ENTER para continuar...")
+                            loop_idade = True
+                        elif entradaIdade > 0:
+                            pessoadic['idade'] = int(entradaIdade)
+                            print((cyan) + '╔' + '═' * 73 + '╗')
+                            print('║' + (reset) + f'{pessoadic['nome']} possuí {pessoadic['idade']} Anos!'.center(73) + (cyan) + '║')
+                            print('╚' + '═' * 73 + '╝' + reset)
+                            input("Pressione ENTER para continuar...")
+                            loop_idade = True
+
+                    else:
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'Digite uma idade Válida por favor.'.center(73) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝' + reset)
+                        input("Pressione ENTER para continuar...")
+                    
+                pessoaslist.append(pessoadic.copy())
+
+                while user_respo != "S" and user_respo != "N":
+
+                    sys("cls")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + f'Deseja registrar outra pessoa? (S/N)'.center(73) + (cyan) + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    user_respo = str(input('Sua Resposta: ')).upper().strip()
+                    if user_respo == 'N':
+                        loop5 = False
+                    elif user_respo == 'S':
+                        loop5 = True
+                    else:
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'Resposta inválida, tente novamente'.center(73) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝' + reset)
+
+            sys("cls")
+
+
+            quantidadePessoas = len(pessoaslist)
+
+            premedia = int(0)
+            contmedia = int(0)
+            for idades in pessoaslist:
+                premedia += idades["idade"]
+                contmedia += 1
+            media = int(premedia / contmedia)
+
+            mulhereslist = list()
+            for mulheres in pessoaslist:
+                if mulheres["sexo"] == "F":
+                    mulhereslist.append(mulheres.copy())
+
+            acimaMedia = list()
+            for m in pessoaslist:
+                if m["idade"] > media:
+                    acimaMedia.append(m.copy())
+
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + (reset) + f'Quantidade de pessoas Cadastradas'.center(73) + (cyan) + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            print(f"• {quantidadePessoas}\n")
+
+            print((green) + "=" * 75 + (reset))
+
+            print((yellow) + '\n╔' + '═' * 73 + '╗')
+            print('║' + (reset) + f'A média de idade entre essas pessoas é:'.center(73) + (yellow) + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            print(f"• {media} Anos\n")
+
+
+
+            tem_mulher = False
+            for pessoa in pessoaslist:
+                if pessoa["sexo"] == "F":
+                    tem_mulher = True
+                    break
+
+            if tem_mulher == False:
+                print((green) + "=" * 75 + (reset))
+                print((pink) + '\n╔' + '═' * 73 + '╗')
+                print('║' + (reset) + f'Nenhuma mulher foi registrada.'.center(73) + (pink) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+            
+                
+            if tem_mulher == True:
+                print((pink) + '\n╔' + '═' * 73 + '╗')
+                print('║' + (reset) + f'Lista de mulheres registradas'.center(73) + (pink) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                for m in mulhereslist:
+                    print(f'• {m["nome"]}')
+                print("")
+
+
+            print((green) + "=" * 75 + (reset))
+
+            verificar = False
+
+            if contmedia > 1:
+                print((purple) + '\n╔' + '═' * 73 + '╗')
+                print('║' + (reset) + f'As pessoas com idade acima da média são:'.center(73) + (purple) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                for pessoa in acimaMedia:
+                    print(f"• {pessoa['nome']} com {pessoa['idade']} anos")
+
+            elif media == 0 and verificar == False:
+                print((purple) + '\n╔' + '═' * 81 + '╗')
+                print('║' + (reset) + f'Todo mundo tem alguns meses de idade, então não posso definir uma média.'.center(73) + (purple) + '║')
+                print('╚' + '═' * 81 + '╝\n' + reset)
+
+            else:
+                print((purple) + '\n╔' + '═' * 73 + '╗')
+                print('║' + (reset) + f'Essa lista possuí apenas 1 candidato, logo ninguém está acima da média.'.center(73) + (purple) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                verificar = True
+
         case "6":
             6
             
@@ -155,7 +372,7 @@ while looppai == True:
         print(cyan + bold + '╔' + '═' * 73 + '╗')
         print('║' + white + f'Votação encerrada'.center(73) + cyan + '║')
         print('╠' + '═' * 73 + '╣')
-        print('║' + white + '1 - Rodar de novo'.center(73) + cyan + '║')
+        print('║' + white + '1 - Voltar para o menu'.center(73) + cyan + '║')
         print('║' + yellow + '2 - Outro Login'.center(73) + cyan + '║')
         print('║' + red + '3 - Encerrar o programa'.center(73) + cyan + '║')
         print('╚' + '═' * 73 + '╝' + reset)
@@ -193,7 +410,7 @@ print('║' + blue + 'Glauber Almeida Brito'.center(73) + cyan + '║')
 print('║' + ' ' * 73 + cyan + '║')
 
 print('║' + yellow + 'Programa 3'.center(73) + cyan + '║')
-print('║' + blue + 'Caroline Nascimento Silva'.center(73) + cyan + '║')
+print('║' + blue + 'Anna Caroline Nascimento Silva'.center(73) + cyan + '║')
 print('║' + ' ' * 73 + cyan + '║')
 
 
@@ -203,7 +420,7 @@ print('║' + ' ' * 73 + cyan + '║')
 
 
 print('║' + yellow + 'Programa 5'.center(73) + cyan + '║')
-print('║' + blue + 'Luis Henrique Nunes Calazans Pozenato'.center(73) + cyan + '║')
+print('║' + blue + 'Luis Pozenato'.center(73) + cyan + '║')
 print('║' + ' ' * 73 + cyan + '║')
 print('╚' + '═' * 73 + '╝' + reset)
     

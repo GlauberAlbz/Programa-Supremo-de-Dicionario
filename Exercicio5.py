@@ -32,11 +32,11 @@ sys("cls")
 
 pessoadic = dict()
 pessoaslist = list()
-loop = True
+loop5 = True
 
 
 
-while loop == True:
+while loop5 == True:
     sys('cls')
     user_respo = str()
 
@@ -155,9 +155,9 @@ while loop == True:
         print('╚' + '═' * 73 + '╝' + reset)
         user_respo = str(input('Sua Resposta: ')).upper().strip()
         if user_respo == 'N':
-            loop = False
+            loop5 = False
         elif user_respo == 'S':
-            loop = True
+            loop5 = True
         else:
             print((red) + '╔' + '═' * 73 + '╗')
             print('║' + (yellow) + f'Resposta inválida, tente novamente'.center(73) + (red) + '║')
