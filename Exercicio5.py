@@ -38,7 +38,7 @@ loop5 = True
 print(cyan + bold + '╔' + '═' * 73 + '╗')
 print('║' + (yellow) + f'O programa irá ler: nome, sexo e idade de várias pessoas.'.center(73) + (cyan) + '║')
 print('║' + ' ' * 73 + cyan + '║')
-print('║' + (orange) + f'no final ele mostrará:'.center(73) + (cyan) + '║')
+print('║' + (orange) + f'No final ele mostrará:'.center(73) + (cyan) + '║')
 print('║' + (blue) + f'Quantas pessoas foram cadastradas.'.center(73) + (cyan) + '║')
 print('║' + (blue) + f'A média de idade.'.center(73) + (cyan) + '║')
 print('║' + (blue) + f'Uma lista com as mulheres.'.center(73) + (cyan) + '║')
@@ -62,7 +62,7 @@ while loop5 == True:
         print((cyan) + '╔' + '═' * 73 + '╗')
         print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
         print('╚' + '═' * 73 + '╝' + reset)
-        entradanome = str(input("Digite o nome do individuo: ")).capitalize()
+        entradanome = str(input("Digite o nome do individuo: ")).strip().capitalize()
 
         if entradanome.replace(" ", "").isalpha():
             pessoadic['nome'] = entradanome
@@ -112,7 +112,7 @@ while loop5 == True:
         print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
         print('╚' + '═' * 73 + '╝' + reset)
         
-        entradaIdade = (input("Digite a idade do Individuo: "))
+        entradaIdade = input("Digite a idade do Individuo: ").strip()
         sys("cls")
 
         if entradaIdade.isdigit():
@@ -259,8 +259,6 @@ else:
     print('╚' + '═' * 73 + '╝\n' + reset)
     verificar = True
 print("")
-
-
 
 
 
