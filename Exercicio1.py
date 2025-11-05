@@ -678,8 +678,8 @@ while loop_ex1:
                                     limpar()
                                     print(f'Aluno: {alunos_EM[indice]['nome']}')
                                     print(f'Grade: {alunos_EM[indice]['grade']}')
-                                    print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
                                     print('Boletim 4° Bimestre:')
+                                    print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
                                     for materia, nota in alunos_EM[indice]['boletim_EM'][3].items():
                                         print(f'{materia}: {nota}')
                                     input('Pressione ENTER para voltar...')
