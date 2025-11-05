@@ -75,7 +75,7 @@ while loop_ex1 == True:
             print('2 - Analisar alunos')
             print('3 - Avaliar alunos')
             print('Digito inválido! Tente novamente.')
-            cadastrar = str(input('Digite sua resposta - (1/2/3): ')).strip()
+            resposta = str(input('Digite sua resposta - (1/2/3): ')).strip()
 
         match resposta:
             case '1':
@@ -170,7 +170,6 @@ while loop_ex1 == True:
         if resposta == '1':
             if len(alunos_EFI) > 0:
                 limpar()
-
                 print('Alunos do Ensino Fundamental I:\n')
 
                 for cont, al in enumerate(alunos_EFI):
@@ -198,7 +197,7 @@ while loop_ex1 == True:
                     for cont, al in enumerate(alunos_EFI):
                         print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
                     
-                    print(f'\nQual aluno você deseja analizar?')
+                    print(f'\nQual aluno você deseja analisar?')
                     resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
                     opcoes_validas = [str(i + 1) for i in range(len(alunos_EFI))]
@@ -209,7 +208,7 @@ while loop_ex1 == True:
                         for cont, al in enumerate(alunos_EFI):
                             print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
 
-                        print(f'\nQual aluno você deseja analizar?')
+                        print(f'\nQual aluno você deseja analisar?')
                         print('Digito Inválido! Tente novamente.')
                         resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
@@ -238,6 +237,7 @@ while loop_ex1 == True:
                             analisar = False
                             avaliar = True
                             skip = True
+                            resposta = '1'
                             break
                             
                     ########################################################################## Aqui vai a parte que mostra os boletins
@@ -433,6 +433,7 @@ while loop_ex1 == True:
 
         if resposta == '1':
             if len(alunos_EFI) > 0:
+                resposta = 'S'
                 if skip == False:
                     limpar()
 
@@ -513,8 +514,8 @@ while loop_ex1 == True:
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
                                     alunos_EFI[indice]['boletim_EF'][0][f'{materia}'] = nota
-                                print(alunos_EFI[indice])
-                                input()
+
+                                skip = True
                                 
                     else:
                         print()
@@ -678,6 +679,7 @@ while loop_ex1 == True:
 
                 print('Não tem nenhum aluno cadastrado no Ensino Fundamental I!')
                 print('Deseja cadastrar algum aluno?')
+                print(len(alunos_EFI))
 
                 resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
 
