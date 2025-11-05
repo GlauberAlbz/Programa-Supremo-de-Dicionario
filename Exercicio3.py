@@ -51,21 +51,35 @@ while loop == "S":
     hj=dt.date.today()
     ctpsmodelo= "1"
 
-    pessoa["nome"]= input(f"{purple}Digite seu nome: {reset}")
+    print((cyan) + '╔' + '═' * 73 + '╗')
+    print('║' + (reset) + f'Digite seu nome: '.center(73) + (cyan) + '║')
+    print('╚' + '═' * 73 + '╝\n' + reset)
+    pessoa["nome"]= input()
     
     
     while True:
-        sleep(1)
-        pessoa["nasc"] = input(f"{purple}Digite sua data de nascimento [DD/MM/AAAA]: {reset}")
+        sys("cls")
+        print((cyan) + '╔' + '═' * 73 + '╗')
+        print('║' + (reset) + 'Digite sua data de nascimento [DD/MM/AAAA]: '.center(73) + (cyan) + '║')
+        print('║' + ' ' * 73 + cyan + '║')
+        print('║' + blue + 'Use o formato DD/MM/AAAA'.center(73) + cyan + '║')
+        print('╚' + '═' * 73 + '╝\n' + reset)
+        pessoa["nasc"] = input()
 
         if len(pessoa["nasc"]) != 10 or pessoa["nasc"][2] != '/' or pessoa["nasc"][5] != '/':
-            print(f"{red}Use o formato DD/MM/AAAA{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Use o formato DD/MM/AAAA'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(2)
             continue
 
         dia, mes, ano = pessoa["nasc"].split('/')
 
         if not (dia.isdigit() and mes.isdigit() and ano.isdigit()):
-            print(f"{red}Use apenas números na data{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Use apenas números na data'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(2)
             continue
 
         dia = int(dia)
@@ -73,36 +87,67 @@ while loop == "S":
         ano = int(ano)
 
         if ano < 1900 or ano > hj.year:
-            print(f"{red}Ano inválido{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Ano inválido'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(2)
             continue
+
         if mes < 1 or mes > 12:
-            print(f"{red}Mês inválido{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Mês inválido'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(2)
             continue
 
         diasPorMes = [31, 29 if (ano % 4 == 0 and (ano % 100 != 0 or ano % 400 == 0)) else 28,
                         31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         if dia < 1 or dia >diasPorMes[mes - 1]:
-            print(f"{red}Dia inválido para o mês informado{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Dia inválido para o mês informado'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(2)
             continue
 
         datanasc = dt.date(ano, mes, dia)
 
         if datanasc > hj:
-            print(f"{red}A data de nascimento não pode ser no futuro{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'A data de nascimento não pode ser no futuro'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(2)
             continue
+
         if hj.year - ano > 120:
-            print(f"{red}Idade acima de 120 anos parece incorreta{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Idade acima de 120 anos parece incorreta'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(2)
             continue
         break
 
+    
     sleep(1)
 
-    pessoa["genero"]= (input(f"{purple}Digite seu gênero cadastrado no cartório [M/F]: {reset}").upper())
+    print((cyan) + '╔' + '═' * 73 + '╗')
+    print('║' + blue + 'Digite seu gênero cadastrado no cartório [M/F]:'.center(73) + cyan + '║')
+    print('╚' + '═' * 73 + '╝\n' + reset)
+    pessoa["genero"]= (input().upper().strip())
+
+    sys("cls")
     
     while pessoa["genero"] not in ("M", "F"):
-        print(f"{red}Gênero inválido{reset}")
+        print((cyan) + '╔' + '═' * 73 + '╗')
+        print('║' + red + 'Gênero inválido'.center(73) + cyan + '║')
+        print('╚' + '═' * 73 + '╝\n' + reset)
         sleep(1)
-        pessoa["genero"]= (input(f"{purple}Digite seu gênero cadastrado no cartório [M/F]: {reset}").upper())
+        
+        print((cyan) + '╔' + '═' * 73 + '╗')
+        print('║' + blue + 'Digite seu gênero cadastrado no cartório [M/F]:'.center(73) + cyan + '║')
+        print('╚' + '═' * 73 + '╝\n' + reset)
+        pessoa["genero"]= (input().upper().strip())
+
+        sys("cls")
 
     pessoa["idade"] = hj.year - datanasc.year - ((hj.month, hj.day) < (datanasc.month, datanasc.day))
 
@@ -111,7 +156,9 @@ while loop == "S":
         ctpsmodelo= (input(f"{pink}O modelo da sua CTPS é antigo ou novo? {green}[Digite '?' para mais informações]{reset}[{yellow}A{reset} -> {yellow}Antigo{reset}/ {orange}N{reset} -> {orange}Novo{reset}]: {reset}").upper())
 
         if ctpsmodelo not in ("0", "", "A", "N", "?", "1"):
-            print(f"{red}Carteira de trabalho inválida{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Carteira de trabalho inválida '.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
             continue
         
         if ctpsmodelo == 'N':
@@ -119,29 +166,44 @@ while loop == "S":
             sys('cls')
             while True:
                 sleep(1)
-                pessoa["ctps"] = input(f"{purple}Digite seu CPF [Sem pontos, traços ou espaços - 11 dígitos]: {reset}")
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + blue + 'Digite seu CPF [Sem pontos, traços ou espaços - 11 dígitos]: '.center(73) + cyan + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                pessoa["ctps"] = input()
                 if len(pessoa["ctps"]) == 11 and pessoa["ctps"].isdigit():
                     break  
                 else:
-                    print(f"{red}O CPF deve ter exatamente 11 dígitos numéricos. Tente novamente{reset}")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + red + 'O CPF deve ter exatamente 11 dígitos numéricos. Tente novamente'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
             break  
         
         elif ctpsmodelo == 'A':
             sys('cls')
             while True:
                 sleep(1)
-                ct = input(f"{purple}Digite o número da sua carteira de trabalho [7 dígitos]: {reset}")
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + purple + 'Digite o número da sua carteira de trabalho [7 dígitos]: '.center(73) + cyan + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                ct = input()
                 if len(ct) == 7 and ct.isdigit():
                     break
                 else:
-                    print(f"{red}O número da CTPS deve ter exatamente 7 dígitos numéricos. Tente novamente{reset}")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + red + 'O número da CTPS deve ter exatamente 7 dígitos numéricos. Tente novamente'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
             while True:
                 sleep(1)
-                ps = input(f"{purple}Digite a série da sua carteira de trabalho [4 dígitos]: {reset}")
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + purple + 'Digite a série da sua carteira de trabalho [4 dígitos]: '.center(73) + cyan + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                ps = input()
                 if len(ps) == 4 and ps.isdigit():
                     break 
                 else:
-                    print(f"{red}A série da CTPS deve ter exatamente 4 dígitos numéricos. Tente novamente{reset}")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + red + 'A série da CTPS deve ter exatamente 4 dígitos numéricos. Tente novamente'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
             pessoa["ctps"]= ct+ps
             break
         
@@ -157,38 +219,57 @@ while loop == "S":
 
         while True:
             sleep(1)
-            pessoa["contrato"] = (input(f"{purple}Digite o ano de contratação do seu contrato atual [AAAA]: {reset}"))
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + purple + 'Digite o ano de contratação do seu contrato atual [AAAA]: '.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            pessoa["contrato"] = (input())
             if len(pessoa["contrato"]) == 4 and pessoa["contrato"].isdigit():
                 pessoa["contrato"] = int(pessoa["contrato"])
                 if hj.year - 100 <= pessoa["contrato"] <= hj.year and pessoa["contrato"] >= ano:
                     break
                 else:
-                    print(f"{red}Ano de contratação inválido{reset}")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + red + 'Ano de contratação inválido'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
                     continue
             else:
-                print(f"{red}Formato inválido. Tente novamente{reset}")
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + red + 'Formato inválido. Tente novamente'.center(73) + cyan + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
                 continue
 
         while True:
             sleep(1)
-            pessoa["inicio"] = (input(f"{purple}Digite o ano de inicio de sua contribuição para a previdência [AAAA]: {reset}"))
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + purple + 'Digite o ano de inicio de sua contribuição para a previdência [AAAA]: '.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            pessoa["inicio"] = (input())
             if len(pessoa["inicio"]) == 4 and pessoa["inicio"].isdigit():
                 pessoa["inicio"] = int(pessoa["inicio"])
                 if hj.year - 100 <= pessoa["inicio"] <= hj.year and pessoa["inicio"] >= ano:
                     break
                 else:
-                    print(f"{red}Ano de contribuição inválido{reset}")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + red + 'Ano de contribuição inválido'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
                     continue
             else:
-                print(f"{red}Formato inválido. Tente novamente{reset}")
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + red + 'Formato inválido. Tente novamente'.center(73) + cyan + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
                 continue
 
         sleep(1)
 
-        pessoa["salario"] = (input(f"{purple}Digite seu último sálario: {reset}"))
+        print((cyan) + '╔' + '═' * 73 + '╗')
+        print('║' + purple + 'Digite seu último sálario: '.center(73) + cyan + '║')
+        print('╚' + '═' * 73 + '╝\n' + reset)
+        pessoa["salario"] = (input())
 
         while not pessoa["salario"].isdigit():
-            print(f"{red}Use apenas números{reset}")
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Use apenas números'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
             sleep(1)
             pessoa["salario"] = (input(f"{purple}Digite seu último sálario: {reset}"))
 
