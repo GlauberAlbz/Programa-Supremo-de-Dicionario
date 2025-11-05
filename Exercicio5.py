@@ -24,6 +24,7 @@ orange = "\033[38;5;208m"
 pink= "\033[38;5;198m"
 brown= "\033[38;5;130m"
 reset= "\033[0m" 
+bold = "\033[1m"
 
 from os import system as sys
 from time import sleep
@@ -34,14 +35,29 @@ pessoadic = dict()
 pessoaslist = list()
 loop5 = True
 
-
+print(cyan + bold + '╔' + '═' * 73 + '╗')
+print('║' + (yellow) + f'O programa irá ler: nome, sexo e idade de várias pessoas.'.center(73) + (cyan) + '║')
+print('║' + ' ' * 73 + cyan + '║')
+print('║' + (orange) + f'no final ele mostrará:'.center(73) + (cyan) + '║')
+print('║' + (blue) + f'Quantas pessoas foram cadastradas.'.center(73) + (cyan) + '║')
+print('║' + (blue) + f'A média de idade.'.center(73) + (cyan) + '║')
+print('║' + (blue) + f'Uma lista com as mulheres.'.center(73) + (cyan) + '║')
+print('║' + (blue) + f'Uma lista de pessoas com idade acima da média.'.center(73) + (cyan) + '║')
+print('║' + ' ' * 73 + cyan + '║')
+print('║' + (purple) + f'Pressione ENTER para continuar...'.center(73) + (cyan) + '║')
+print('╚' + '═' * 73 + '╝' + reset)
+input("")
 
 while loop5 == True:
     sys('cls')
+    
     user_respo = str()
 
     loop_nome = False
     while loop_nome == False:
+        
+
+        sys('cls')
 
         print((cyan) + '╔' + '═' * 73 + '╗')
         print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
@@ -242,7 +258,7 @@ else:
     print('║' + (reset) + f'Essa lista possuí apenas 1 candidato, logo ninguém está acima da média.'.center(73) + (purple) + '║')
     print('╚' + '═' * 73 + '╝\n' + reset)
     verificar = True
-
+print("")
 
 
 
