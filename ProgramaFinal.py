@@ -391,7 +391,7 @@ while looppai == True:
             sys("cls")
 sys("cls")
 print(cyan + bold + '╔' + '═' * 73 + '╗')
-print('║' + white + f'Tarefa encerrada'.center(73) + cyan + '║')
+print('║' + white + 'Tarefa encerrada'.center(73) + cyan + '║')
 print('╠' + '═' * 73 + '╣')
 print('║' + green + 'Obrigado pela preferência!'.center(73) + cyan + '║')
 print('║' + ' ' * 73 + cyan + '║')

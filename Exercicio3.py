@@ -153,7 +153,7 @@ while loop == "S":
 
     while ctpsmodelo not in ("0", ""):
         sleep(1)
-        ctpsmodelo= (input(f"{pink}O modelo da sua CTPS é antigo ou novo? {green}[Digite '?' para mais informações]{reset}[{yellow}A{reset} -> {yellow}Antigo{reset}/ {orange}N{reset} -> {orange}Novo{reset}]: {reset}").upper())
+        ctpsmodelo= (input(f"{pink}O modelo da sua CTPS é antigo ou novo? {green}[Digite '?' para mais informações]{reset}[{yellow}A{reset} -> {yellow}Antigo{reset}/ {orange}N{reset} -> {orange}Novo{reset}]: {reset}").upper().strip())
 
         if ctpsmodelo not in ("0", "", "A", "N", "?", "1"):
             print((cyan) + '╔' + '═' * 73 + '╗')
