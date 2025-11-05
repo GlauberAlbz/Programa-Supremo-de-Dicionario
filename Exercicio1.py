@@ -511,8 +511,10 @@ while loop_ex1 == True:
                                     alunos_EFI[indice]['boletim_EF'] = boletim_EF
                                     
                                 for materia in materias_EF:
-                                    alunos_EFI[indice][f'{boletim_EF[0]}'][f'{materia}'] = int(input(f'Nota de {materia}: '))
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EFI[indice]['boletim_EF'][0][f'{materia}'] = nota
                                 print(alunos_EFI[indice])
+                                input()
                                 
                     else:
                         print()
