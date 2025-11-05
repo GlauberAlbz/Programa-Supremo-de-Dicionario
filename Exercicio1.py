@@ -9,6 +9,7 @@
 '''
 import random as rd
 from os import system as sys
+from os import name as os_name
 from time import sleep
 
 black= "\033[0;30m" 
@@ -45,13 +46,17 @@ boletim_EM = [bimestre_1_EM, bimestre_2_EM, bimestre_3_EM, bimestre_4_EM]
 materias_EM = ['Lingua Portuguesa', 'Matemática', 'História', 'Geografia', 'Física', 'Química', 'Biologia', 'Sociologia', 'Filosofia', 'Inglês', 'Artes', 'Educação Física']
 
 def limpar():
-    sys('cls')
+    sys('cls' if os_name == 'nt' else 'clear')
 
 resposta = str()
+resposta_escolaridade = str()
+resposta_aluno = str()
 indice = int()
 nota = int()
 
-skip = False # Serve para pular o inicio do programa para evitar casos de redundância
+skip = False # Serve para pular partes do programa para evitar casos de redundância
+registro_boletim = False
+visualizar_boletim = False
 
 # 4 variáveis booleanas principais, servem para sustentar os loops principais do programa
 loop_ex1 = True
@@ -59,8 +64,8 @@ cadastrar = False
 analisar = False
 avaliar = False
 
-while loop_ex1 == True:
-    if skip == False:
+while loop_ex1:
+    if not skip:
         limpar()
         print('O que deseja fazer?')
         print('1 - Cadastrar alunos')
@@ -82,16 +87,19 @@ while loop_ex1 == True:
                 cadastrar = True
                 analisar = False
                 avaliar = False
+                resposta = ''
             case '2':
                 cadastrar = False
                 analisar = True
                 avaliar = False
+                resposta = ''
             case '3':
                 cadastrar = False
                 analisar = False
                 avaliar = True
+                resposta = ''
 
-    while cadastrar == True:
+    while cadastrar:
         limpar()
         
         aluno['nome'] = str(input('Digite o nome do(da) aluno(a): '))
@@ -144,30 +152,37 @@ while loop_ex1 == True:
             cadastrar = True
             analisar = False
             avaliar = False
+            resposta = ''
         else:
             cadastrar = False
             analisar = False
             avaliar = False
             skip = False
+            resposta = ''
     
-    while analisar == True:
+    while analisar:
         limpar()
 
         print('O aluno que você deseja analisar é de qual escolaridade?')
+        print('0 - Voltar')
         print('1 - Ensino Fundamental I')
         print('2 - Ensino Fundamental II')
         print('3 - Ensino Médio')
 
-        resposta = str(input('Digite sua resposta - (1/2/3): ')).strip()
+        resposta_escolaridade = str(input('Digite sua resposta - (0/1/2/3): ')).strip()
 
-        while resposta not in ['1', '2', '3']:
+        while resposta_escolaridade not in ['0', '1', '2', '3']:
             limpar()
 
             print('O aluno que você deseja analisar é de qual escolaridade?')
+            print('0 - Voltar')
+            print('1 - Ensino Fundamental I')
+            print('2 - Ensino Fundamental II')
+            print('3 - Ensino Médio')
             print('Digito inválido! Tente novamente.')
-            resposta = str(input('Digite sua resposta - (1/2/3): ')).strip()
+            resposta_escolaridade = str(input('Digite sua resposta - (0/1/2/3): ')).strip()
 
-        if resposta == '1':
+        if resposta_escolaridade == '1':
             if len(alunos_EFI) > 0:
                 limpar()
                 print('Alunos do Ensino Fundamental I:\n')
@@ -191,6 +206,8 @@ while loop_ex1 == True:
                     resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
 
                 if resposta == 'S':
+                    visualizar_boletim = True
+                    resposta = ''
                     limpar()
                     print('Alunos do Ensino Fundamental I:\n')
 
@@ -198,11 +215,11 @@ while loop_ex1 == True:
                         print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
                     
                     print(f'\nQual aluno você deseja analisar?')
-                    resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                    resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
                     opcoes_validas = [str(i + 1) for i in range(len(alunos_EFI))]
 
-                    while resposta not in opcoes_validas:
+                    while resposta_aluno not in opcoes_validas:
                         print('Alunos do Ensino Fundamental I:\n')
 
                         for cont, al in enumerate(alunos_EFI):
@@ -210,9 +227,9 @@ while loop_ex1 == True:
 
                         print(f'\nQual aluno você deseja analisar?')
                         print('Digito Inválido! Tente novamente.')
-                        resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                        resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
-                    indice = int(resposta) - 1
+                    indice = int(resposta_aluno) - 1
                     
                     limpar()
                     if len(alunos_EFI[indice]) <= 3:
@@ -237,11 +254,89 @@ while loop_ex1 == True:
                             analisar = False
                             avaliar = True
                             skip = True
-                            resposta = '1'
+                            resposta = ''
                             break
-                            
-                    ########################################################################## Aqui vai a parte que mostra os boletins
+                        else:
+                            skip = False
+                            cadastrar = False
+                            analisar = False
+                            avaliar = False
+                            resposta = ''
+                            break
+                    else:
+                        while visualizar_boletim:
+                            limpar()
+
+                            print(f'Aluno: {alunos_EFI[indice]['nome']}')
+                            print(f'Grade: {alunos_EFI[indice]['grade']}')
+                            print(f'Escolaridade: {alunos_EFI[indice]['escolaridade']}')
+
+                            print('Você deseja visualizar o boletim de qual bimestre?')
+                            print('0 - Voltar')
+                            print('1 - 1° Bimestre')
+                            print('2 - 2° Bimestre')
+                            print('3 - 3° Bimestre')
+                            print('4 - 4° Bimestre')
+                            resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                            while resposta not in ['0', '1', '2', '3', '4']:
+                                limpar()
+
+                                print(f'Aluno: {alunos_EFI[indice]['nome']}')
+                                print(f'Grade: {alunos_EFI[indice]['grade']}')
+                                print(f'Escolaridade: {alunos_EFI[indice]['escolaridade']}')
+
+                                print('Você deseja visualizar o boletim de qual bimestre?')
+                                print('0 - Voltar')
+                                print('1 - 1° Bimestre')
+                                print('2 - 2° Bimestre')
+                                print('3 - 3° Bimestre')
+                                print('4 - 4° Bimestre')
+                                print('Digito Inválido! Tente novamente.')
+                                resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                            match resposta:
+                                case '0':
+                                    visualizar_boletim = False
+                                    skip = False
+                                case '1':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EFI[indice]['nome']}')
+                                    print(f'Grade: {alunos_EFI[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EFI[indice]['escolaridade']}')
+                                    print('Boletim 1° Bimestre:')
+                                    for materia, nota in alunos_EFI[indice]['boletim_EF'][0].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '2':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EFI[indice]['nome']}')
+                                    print(f'Grade: {alunos_EFI[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EFI[indice]['escolaridade']}')
+                                    print('Boletim 2° Bimestre:')
+                                    for materia, nota in alunos_EFI[indice]['boletim_EF'][1].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '3':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EFI[indice]['nome']}')
+                                    print(f'Grade: {alunos_EFI[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EFI[indice]['escolaridade']}')
+                                    print('Boletim 3° Bimestre:')
+                                    for materia, nota in alunos_EFI[indice]['boletim_EF'][2].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '4':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EFI[indice]['nome']}')
+                                    print(f'Grade: {alunos_EFI[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EFI[indice]['escolaridade']}')
+                                    print('Boletim 1° Bimestre:')
+                                    for materia, nota in alunos_EFI[indice]['boletim_EF'][3].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
                 else:
+                    resposta = ''
                     break
             else:
                 limpar()
@@ -256,13 +351,14 @@ while loop_ex1 == True:
                     analisar = False
                     avaliar = False
                     skip = True
+                    resposta = ''
                 else:
+                    resposta = ''
                     cadastrar = False
 
-        elif resposta == '2':
+        elif resposta_escolaridade == '2':
             if len(alunos_EFII) > 0:
                 limpar()
-
                 print('Alunos do Ensino Fundamental I:\n')
 
                 for cont, al in enumerate(alunos_EFII):
@@ -274,7 +370,7 @@ while loop_ex1 == True:
                 while resposta not in ['S', 'N']:
                     limpar()
 
-                    print('Alunos do Ensino Fundamental I:\n')
+                    print('Alunos do Ensino Fundamental II:\n')
 
                     for cont, al in enumerate(alunos_EFII):
                         print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
@@ -284,29 +380,31 @@ while loop_ex1 == True:
                     resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
 
                 if resposta == 'S':
+                    visualizar_boletim = True
+                    resposta = ''
                     limpar()
-                    print('Alunos do Ensino Fundamental I:\n')
+                    print('Alunos do Ensino Fundamental II:\n')
 
                     for cont, al in enumerate(alunos_EFII):
                         print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
-                    
-                    print(f'\nQual aluno você deseja analizar?')
-                    resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
-                    opcoes_validas = [str(i + 1) for i in range(len(alunos_EFII))]
+                    print(f'\nQual aluno você deseja analisar?')
+                    resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
-                    while resposta not in opcoes_validas:
-                        print('Alunos do Ensino Fundamental I:\n')
+                    opcoes_validas = [str(i + 1) for i in range(len(alunos_EFI))]
+
+                    while resposta_aluno not in opcoes_validas:
+                        print('Alunos do Ensino Fundamental II:\n')
 
                         for cont, al in enumerate(alunos_EFII):
                             print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
 
-                        print(f'\nQual aluno você deseja analizar?')
+                        print(f'\nQual aluno você deseja analisar?')
                         print('Digito Inválido! Tente novamente.')
-                        resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                        resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
-                    indice = int(resposta) - 1
-                    
+                    indice = int(resposta_aluno) - 1
+
                     limpar()
                     if len(alunos_EFII[indice]) <= 3:
                         print(f'Aluno: {alunos_EFII[indice]['nome']}')
@@ -330,17 +428,112 @@ while loop_ex1 == True:
                             analisar = False
                             avaliar = True
                             skip = True
+                            resposta = ''
                             break
-                            
-                    ########################################################################## Aqui vai a parte que mostra os boletins
+                        else:
+                            skip = False
+                            cadastrar = False
+                            analisar = False
+                            avaliar = False
+                            resposta = ''
+                            break
+                    else:
+                        while visualizar_boletim:
+                            limpar()
+
+                            print(f'Aluno: {alunos_EFII[indice]['nome']}')
+                            print(f'Grade: {alunos_EFII[indice]['grade']}')
+                            print(f'Escolaridade: {alunos_EFII[indice]['escolaridade']}')
+
+                            print('Você deseja visualizar o boletim de qual bimestre?')
+                            print('0 - Voltar')
+                            print('1 - 1° Bimestre')
+                            print('2 - 2° Bimestre')
+                            print('3 - 3° Bimestre')
+                            print('4 - 4° Bimestre')
+                            resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                            while resposta not in ['0', '1', '2', '3', '4']:
+                                limpar()
+
+                                print(f'Aluno: {alunos_EFII[indice]['nome']}')
+                                print(f'Grade: {alunos_EFII[indice]['grade']}')
+                                print(f'Escolaridade: {alunos_EFII[indice]['escolaridade']}')
+
+                                print('Você deseja visualizar o boletim de qual bimestre?')
+                                print('0 - Voltar')
+                                print('1 - 1° Bimestre')
+                                print('2 - 2° Bimestre')
+                                print('3 - 3° Bimestre')
+                                print('4 - 4° Bimestre')
+                                print('Digito Inválido! Tente novamente.')
+                                resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                            match resposta:
+                                case '0':
+                                    visualizar_boletim = False
+                                    skip = False
+                                case '1':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EFII[indice]['nome']}')
+                                    print(f'Grade: {alunos_EFII[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EFII[indice]['escolaridade']}')
+                                    print('Boletim 1° Bimestre:')
+                                    for materia, nota in alunos_EFII[indice]['boletim_EF'][0].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '2':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EFII[indice]['nome']}')
+                                    print(f'Grade: {alunos_EFII[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EFII[indice]['escolaridade']}')
+                                    print('Boletim 2° Bimestre:')
+                                    for materia, nota in alunos_EFII[indice]['boletim_EF'][1].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '3':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EFII[indice]['nome']}')
+                                    print(f'Grade: {alunos_EFII[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EFII[indice]['escolaridade']}')
+                                    print('Boletim 3° Bimestre:')
+                                    for materia, nota in alunos_EFII[indice]['boletim_EF'][2].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '4':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EFII[indice]['nome']}')
+                                    print(f'Grade: {alunos_EFII[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EFII[indice]['escolaridade']}')
+                                    print('Boletim 1° Bimestre:')
+                                    for materia, nota in alunos_EFII[indice]['boletim_EF'][3].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
                 else:
+                    resposta = ''
                     break
-            
-        else: # resposta == '3':
-            if len(alunos_EM) > 0:
+            else:
                 limpar()
 
-                print('Alunos do Ensino Fundamental I:\n')
+                print('Não tem nenhum aluno cadastrado no Ensino Fundamental II!')
+                print('Deseja cadastrar algum aluno?')
+
+                resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
+
+                if resposta == 'S':
+                    cadastrar = True
+                    analisar = False
+                    avaliar = False
+                    skip = True
+                    resposta = ''
+                else:
+                    resposta = ''
+                    cadastrar = False
+            
+        elif resposta_escolaridade == '3':
+            if len(alunos_EM) > 0:
+                limpar()
+                print('Alunos do Ensino Médio:\n')
 
                 for cont, al in enumerate(alunos_EM):
                     print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
@@ -351,7 +544,7 @@ while loop_ex1 == True:
                 while resposta not in ['S', 'N']:
                     limpar()
 
-                    print('Alunos do Ensino Fundamental I:\n')
+                    print('Alunos do Ensino Médio:\n')
 
                     for cont, al in enumerate(alunos_EM):
                         print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
@@ -361,29 +554,31 @@ while loop_ex1 == True:
                     resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
 
                 if resposta == 'S':
+                    visualizar_boletim = True
+                    resposta = ''
                     limpar()
-                    print('Alunos do Ensino Fundamental I:\n')
+                    print('Alunos do Ensino Médio:\n')
 
                     for cont, al in enumerate(alunos_EM):
                         print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
-                    
-                    print(f'\nQual aluno você deseja analizar?')
-                    resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+
+                    print(f'\nQual aluno você deseja analisar?')
+                    resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
                     opcoes_validas = [str(i + 1) for i in range(len(alunos_EM))]
 
-                    while resposta not in opcoes_validas:
-                        print('Alunos do Ensino Fundamental I:\n')
+                    while resposta_aluno not in opcoes_validas:
+                        print('Alunos do Ensino Médio:\n')
 
                         for cont, al in enumerate(alunos_EM):
                             print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
 
-                        print(f'\nQual aluno você deseja analizar?')
+                        print(f'\nQual aluno você deseja analisar?')
                         print('Digito Inválido! Tente novamente.')
-                        resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                        resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
-                    indice = int(resposta) - 1
-                    
+                    indice = int(resposta_aluno) - 1
+
                     limpar()
                     if len(alunos_EM[indice]) <= 3:
                         print(f'Aluno: {alunos_EM[indice]['nome']}')
@@ -407,34 +602,143 @@ while loop_ex1 == True:
                             analisar = False
                             avaliar = True
                             skip = True
+                            resposta = ''
                             break
-                            
-                    ########################################################################## Aqui vai a parte que mostra os boletins
+                        else:
+                            skip = False
+                            cadastrar = False
+                            analisar = False
+                            avaliar = False
+                            resposta = ''
+                            break
+                    else:
+                        while visualizar_boletim:
+                            limpar()
+
+                            print(f'Aluno: {alunos_EM[indice]['nome']}')
+                            print(f'Grade: {alunos_EM[indice]['grade']}')
+                            print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
+
+                            print('Você deseja visualizar o boletim de qual bimestre?')
+                            print('0 - Voltar')
+                            print('1 - 1° Bimestre')
+                            print('2 - 2° Bimestre')
+                            print('3 - 3° Bimestre')
+                            print('4 - 4° Bimestre')
+                            resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                            while resposta not in ['0', '1', '2', '3', '4']:
+                                limpar()
+
+                                print(f'Aluno: {alunos_EM[indice]['nome']}')
+                                print(f'Grade: {alunos_EM[indice]['grade']}')
+                                print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
+
+                                print('Você deseja visualizar o boletim de qual bimestre?')
+                                print('0 - Voltar')
+                                print('1 - 1° Bimestre')
+                                print('2 - 2° Bimestre')
+                                print('3 - 3° Bimestre')
+                                print('4 - 4° Bimestre')
+                                print('Digito Inválido! Tente novamente.')
+                                resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                            match resposta:
+                                case '0':
+                                    visualizar_boletim = False
+                                    skip = False
+                                case '1':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EM[indice]['nome']}')
+                                    print(f'Grade: {alunos_EM[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
+                                    print('Boletim 1° Bimestre:')
+                                    for materia, nota in alunos_EM[indice]['boletim_EM'][0].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '2':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EM[indice]['nome']}')
+                                    print(f'Grade: {alunos_EM[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
+                                    print('Boletim 2° Bimestre:')
+                                    for materia, nota in alunos_EM[indice]['boletim_EM'][1].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '3':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EM[indice]['nome']}')
+                                    print(f'Grade: {alunos_EM[indice]['grade']}')
+                                    print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
+                                    print('Boletim 3° Bimestre:')
+                                    for materia, nota in alunos_EM[indice]['boletim_EM'][2].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
+                                case '4':
+                                    limpar()
+                                    print(f'Aluno: {alunos_EM[indice]['nome']}')
+                                    print(f'Grade: {alunos_EM[indice]['grade']}')
+                                    print('Boletim 4° Bimestre:')
+                                    print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
+                                    for materia, nota in alunos_EM[indice]['boletim_EM'][3].items():
+                                        print(f'{materia}: {nota}')
+                                    input('Pressione ENTER para voltar...')
                 else:
+                    resposta = ''
                     break
-    
-    while avaliar == True:
-        if skip == False:
+            else:
+                limpar()
+
+                print('Não tem nenhum aluno cadastrado no Ensino Médio!')
+                print('Deseja cadastrar algum aluno?')
+
+                resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
+
+                if resposta == 'S':
+                    cadastrar = True
+                    analisar = False
+                    avaliar = False
+                    skip = True
+                    resposta = ''
+                else:
+                    resposta = ''
+                    cadastrar = False
+
+        else: # resposta_escolaridade == '0'
+            skip = False
+            cadastrar = False
+            analisar = False
+            avaliar = False
+
+    while avaliar:
+        if not skip:
             limpar()
 
             print('O aluno que você deseja avaliar é de qual escolaridade?')
+            print('0 - Voltar')
             print('1 - Ensino Fundamental I')
             print('2 - Ensino Fundamental II')
             print('3 - Ensino Médio')
 
-            resposta = str(input('Digite sua resposta - (1/2/3): ')).strip()
+            resposta_escolaridade = str(input('Digite sua resposta - (0/1/2/3): ')).strip()
 
-            while resposta not in ['1', '2', '3']:
+            while resposta_escolaridade not in ['0', '1', '2', '3']:
                 limpar()
 
                 print('O aluno que você deseja avaliar é de qual escolaridade?')
+                print('0 - Voltar')
+                print('1 - Ensino Fundamental I')
+                print('2 - Ensino Fundamental II')
+                print('3 - Ensino Médio')
                 print('Digito inválido! Tente novamente.')
-                resposta = str(input('Digite sua resposta - (1/2/3): ')).strip()
+                resposta_escolaridade = str(input('Digite sua resposta - (0/1/2/3): ')).strip()
 
-        if resposta == '1':
+        if resposta_escolaridade == '1':
+            resposta = ''
             if len(alunos_EFI) > 0:
-                resposta = 'S'
-                if skip == False:
+                if skip:
+                    resposta = 'S'
+                if not skip:
                     limpar()
 
                     print('Alunos do Ensino Fundamental I:\n')
@@ -458,19 +762,21 @@ while loop_ex1 == True:
                         resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
 
                 if resposta == 'S':
-                    if skip == False:
+                    resposta = ''
+                    registro_boletim = True
+                    if not skip:
                         limpar()
                         print('Alunos do Ensino Fundamental I:\n')
 
                         for cont, al in enumerate(alunos_EFI):
                             print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
-                        
+
                         print(f'\nQual aluno você deseja avaliar?')
-                        resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                        resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
                         opcoes_validas = [str(i + 1) for i in range(len(alunos_EFI))]
 
-                        while resposta not in opcoes_validas:
+                        while resposta_aluno not in opcoes_validas:
                             print('Alunos do Ensino Fundamental I:\n')
 
                             for cont, al in enumerate(alunos_EFI):
@@ -478,12 +784,12 @@ while loop_ex1 == True:
 
                             print(f'\nQual aluno você deseja avaliar?')
                             print('Digito Inválido! Tente novamente.')
-                            resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                            resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
-                        indice = int(resposta) - 1
-                        
-                        limpar()
-                    if len(alunos_EFI[indice]) <= 3:
+                    indice = int(resposta_aluno) - 1
+                    resposta = ''
+
+                    while registro_boletim:
                         limpar()
                         
                         print(f'Aluno: {alunos_EFI[indice]['nome']}')
@@ -491,9 +797,14 @@ while loop_ex1 == True:
                         print(f'Escolaridade: {alunos_EFI[indice]['escolaridade']}')
 
                         print('Você deseja registrar o boletim de qual bimestre?')
-                        resposta = str(input('Digite sua resposta? (1-4): '))
+                        print('0 - Voltar')
+                        print('1 - 1° Bimestre')
+                        print('2 - 2° Bimestre')
+                        print('3 - 3° Bimestre')
+                        print('4 - 4° Bimestre')
+                        resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
 
-                        while resposta not in ['1', '2', '3', '4']:
+                        while resposta not in ['0', '1', '2', '3', '4']:
                             limpar()
                         
                             print(f'Aluno: {alunos_EFI[indice]['nome']}')
@@ -501,11 +812,20 @@ while loop_ex1 == True:
                             print(f'Escolaridade: {alunos_EFI[indice]['escolaridade']}')
 
                             print('Você deseja registrar o boletim de qual bimestre?')
+                            print('0 - Voltar')
+                            print('1 - 1° Bimestre')
+                            print('2 - 2° Bimestre')
+                            print('3 - 3° Bimestre')
+                            print('4 - 4° Bimestre')
                             print('Digito Inválido! Tente novamente.')
-                            resposta = str(input('Digite sua resposta? (1-4): '))
+                            resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
                             
                         match resposta:
+                            case '0':
+                                registro_boletim = False
+                                skip = False
                             case '1':
+                                resposta = ''
                                 print('Boletim 1° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFI[indice]:
@@ -516,10 +836,44 @@ while loop_ex1 == True:
                                     alunos_EFI[indice]['boletim_EF'][0][f'{materia}'] = nota
 
                                 skip = True
-                                
-                    else:
-                        print()
+                            case '2':
+                                resposta = ''
+                                print('Boletim 2° Bimestre (Registro): ')
+
+                                if 'boletim_EF' not in alunos_EFI[indice]:
+                                    alunos_EFI[indice]['boletim_EF'] = boletim_EF
+
+                                for materia in materias_EF:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EFI[indice]['boletim_EF'][1][f'{materia}'] = nota
+
+                                skip = True
+                            case '3':
+                                resposta = ''
+                                print('Boletim 3° Bimestre (Registro): ')
+
+                                if 'boletim_EF' not in alunos_EFI[indice]:
+                                    alunos_EFI[indice]['boletim_EF'] = boletim_EF
+
+                                for materia in materias_EF:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EFI[indice]['boletim_EF'][2][f'{materia}'] = nota
+
+                                skip = True
+                            case '4':
+                                resposta = ''
+                                print('Boletim 4° Bimestre (Registro): ')
+
+                                if 'boletim_EF' not in alunos_EFI[indice]:
+                                    alunos_EFI[indice]['boletim_EF'] = boletim_EF
+
+                                for materia in materias_EF:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EFI[indice]['boletim_EF'][3][f'{materia}'] = nota
+
+                                skip = True
                 else:
+                    resposta = ''
                     break
 
             else:
@@ -535,15 +889,20 @@ while loop_ex1 == True:
                     analisar = False
                     avaliar = False
                     skip = True
+                    resposta = ''
                 else:
                     cadastrar = False
+                    resposta = ''
 
-        elif resposta == '2':
+        elif resposta_escolaridade == '2':
+            resposta = ''
             if len(alunos_EFII) > 0:
-                if skip == False:
+                if skip:
+                    resposta = 'S'
+                if not skip:
                     limpar()
 
-                    print('Alunos do Ensino Fundamental I:\n')
+                    print('Alunos do Ensino Fundamental II:\n')
 
                     for cont, al in enumerate(alunos_EFII):
                         print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
@@ -554,7 +913,7 @@ while loop_ex1 == True:
                     while resposta not in ['S', 'N']:
                         limpar()
 
-                        print('Alunos do Ensino Fundamental I:\n')
+                        print('Alunos do Ensino Fundamental II:\n')
 
                         for cont, al in enumerate(alunos_EFII):
                             print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
@@ -564,44 +923,124 @@ while loop_ex1 == True:
                         resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
 
                 if resposta == 'S':
-                    if skip == False:
+                    resposta = ''
+                    registro_boletim = True
+                    if not skip:
                         limpar()
-                        print('Alunos do Ensino Fundamental I:\n')
+                        print('Alunos do Ensino Fundamental II:\n')
 
                         for cont, al in enumerate(alunos_EFII):
                             print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
-                        
+
                         print(f'\nQual aluno você deseja avaliar?')
-                        resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                        resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
                         opcoes_validas = [str(i + 1) for i in range(len(alunos_EFII))]
 
-                        while resposta not in opcoes_validas:
-                            print('Alunos do Ensino Fundamental I:\n')
+                        while resposta_aluno not in opcoes_validas:
+                            print('Alunos do Ensino Fundamental II:\n')
 
                             for cont, al in enumerate(alunos_EFII):
                                 print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
 
                             print(f'\nQual aluno você deseja avaliar?')
                             print('Digito Inválido! Tente novamente.')
-                            resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                            resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
-                        indice = int(resposta) - 1
-                        
+                    indice = int(resposta_aluno) - 1
+                    resposta = ''
+
+                    while registro_boletim:
                         limpar()
-                    if len(alunos_EFII[indice]) <= 3:
-                        limpar()
-                        
+
                         print(f'Aluno: {alunos_EFII[indice]['nome']}')
                         print(f'Grade: {alunos_EFII[indice]['grade']}')
                         print(f'Escolaridade: {alunos_EFII[indice]['escolaridade']}')
+
+                        print('Você deseja registrar o boletim de qual bimestre?')
+                        print('0 - Voltar')
+                        print('1 - 1° Bimestre')
+                        print('2 - 2° Bimestre')
+                        print('3 - 3° Bimestre')
+                        print('4 - 4° Bimestre')
+                        resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                        while resposta not in ['0', '1', '2', '3', '4']:
+                            limpar()
+
+                            print(f'Aluno: {alunos_EFII[indice]['nome']}')
+                            print(f'Grade: {alunos_EFII[indice]['grade']}')
+                            print(f'Escolaridade: {alunos_EFII[indice]['escolaridade']}')
+
+                            print('Você deseja registrar o boletim de qual bimestre?')
+                            print('0 - Voltar')
+                            print('1 - 1° Bimestre')
+                            print('2 - 2° Bimestre')
+                            print('3 - 3° Bimestre')
+                            print('4 - 4° Bimestre')
+                            print('Digito Inválido! Tente novamente.')
+                            resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                        match resposta:
+                            case '0':
+                                registro_boletim = False
+                                skip = False
+                            case '1':
+                                resposta = ''
+                                print('Boletim 1° Bimestre (Registro): ')
+
+                                if 'boletim_EF' not in alunos_EFII[indice]:
+                                    alunos_EFII[indice]['boletim_EF'] = boletim_EF
+
+                                for materia in materias_EF:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EFII[indice]['boletim_EF'][0][f'{materia}'] = nota
+
+                                skip = True
+                            case '2':
+                                resposta = ''
+                                print('Boletim 2° Bimestre (Registro): ')
+
+                                if 'boletim_EF' not in alunos_EFII[indice]:
+                                    alunos_EFII[indice]['boletim_EF'] = boletim_EF
+
+                                for materia in materias_EF:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EFII[indice]['boletim_EF'][1][f'{materia}'] = nota
+
+                                skip = True
+                            case '3':
+                                resposta = ''
+                                print('Boletim 3° Bimestre (Registro): ')
+
+                                if 'boletim_EF' not in alunos_EFII[indice]:
+                                    alunos_EFII[indice]['boletim_EF'] = boletim_EF
+
+                                for materia in materias_EF:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EFII[indice]['boletim_EF'][2][f'{materia}'] = nota
+
+                                skip = True
+                            case '4':
+                                resposta = ''
+                                print('Boletim 4° Bimestre (Registro): ')
+
+                                if 'boletim_EF' not in alunos_EFII[indice]:
+                                    alunos_EFII[indice]['boletim_EF'] = boletim_EF
+
+                                for materia in materias_EF:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EFII[indice]['boletim_EF'][3][f'{materia}'] = nota
+
+                                skip = True
                 else:
+                    resposta = ''
                     break
-                
+
             else:
                 limpar()
 
-                print('Não tem nenhum aluno cadastrado no Ensino Fundamental I!')
+                print('Não tem nenhum aluno cadastrado no Ensino Fundamental II!')
                 print('Deseja cadastrar algum aluno?')
 
                 resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
@@ -611,15 +1050,20 @@ while loop_ex1 == True:
                     analisar = False
                     avaliar = False
                     skip = True
+                    resposta = ''
                 else:
                     cadastrar = False
+                    resposta = ''
             
-        else: # resposta == '3':
+        elif resposta_escolaridade == '3':
+            resposta = ''
             if len(alunos_EM) > 0:
-                if skip == False:
+                if skip:
+                    resposta = 'S'
+                if not skip:
                     limpar()
 
-                    print('Alunos do Ensino Fundamental I:\n')
+                    print('Alunos do Ensino Médio:\n')
 
                     for cont, al in enumerate(alunos_EM):
                         print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
@@ -630,7 +1074,7 @@ while loop_ex1 == True:
                     while resposta not in ['S', 'N']:
                         limpar()
 
-                        print('Alunos do Ensino Fundamental I:\n')
+                        print('Alunos do Ensino Médio:\n')
 
                         for cont, al in enumerate(alunos_EM):
                             print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
@@ -640,46 +1084,125 @@ while loop_ex1 == True:
                         resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
 
                 if resposta == 'S':
-                    if skip == False:
+                    resposta = ''
+                    registro_boletim = True
+                    if not skip:
                         limpar()
-                        print('Alunos do Ensino Fundamental I:\n')
+                        print('Alunos do Ensino Médio:\n')
 
                         for cont, al in enumerate(alunos_EM):
                             print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
-                        
+
                         print(f'\nQual aluno você deseja avaliar?')
-                        resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                        resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
                         opcoes_validas = [str(i + 1) for i in range(len(alunos_EM))]
 
-                        while resposta not in opcoes_validas:
-                            print('Alunos do Ensino Fundamental I:\n')
+                        while resposta_aluno not in opcoes_validas:
+                            print('Alunos do Ensino Médio:\n')
 
                             for cont, al in enumerate(alunos_EM):
                                 print(f'{cont + 1} -> {al['nome']} - {al['grade']}º Ano - {al['escolaridade']}')
 
                             print(f'\nQual aluno você deseja avaliar?')
                             print('Digito Inválido! Tente novamente.')
-                            resposta = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
+                            resposta_aluno = str(input(f'Digite sua resposta - (1-{cont + 1}): ')).strip()
 
-                        indice = int(resposta) - 1
-                        
+                    indice = int(resposta_aluno) - 1
+                    resposta = ''
+
+                    while registro_boletim:
                         limpar()
-                    if len(alunos_EM[indice]) <= 3:
-                        limpar()
-                        
+
                         print(f'Aluno: {alunos_EM[indice]['nome']}')
                         print(f'Grade: {alunos_EM[indice]['grade']}')
                         print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
+
+                        print('Você deseja registrar o boletim de qual bimestre?')
+                        print('0 - Voltar')
+                        print('1 - 1° Bimestre')
+                        print('2 - 2° Bimestre')
+                        print('3 - 3° Bimestre')
+                        print('4 - 4° Bimestre')
+                        resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                        while resposta not in ['0', '1', '2', '3', '4']:
+                            limpar()
+
+                            print(f'Aluno: {alunos_EM[indice]['nome']}')
+                            print(f'Grade: {alunos_EM[indice]['grade']}')
+                            print(f'Escolaridade: {alunos_EM[indice]['escolaridade']}')
+
+                            print('Você deseja registrar o boletim de qual bimestre?')
+                            print('0 - Voltar')
+                            print('1 - 1° Bimestre')
+                            print('2 - 2° Bimestre')
+                            print('3 - 3° Bimestre')
+                            print('4 - 4° Bimestre')
+                            print('Digito Inválido! Tente novamente.')
+                            resposta = str(input('Digite sua resposta? (0/1/2/3/4): '))
+
+                        match resposta:
+                            case '0':
+                                registro_boletim = False
+                                skip = False
+                            case '1':
+                                resposta = ''
+                                print('Boletim 1° Bimestre (Registro): ')
+
+                                if 'boletim_EM' not in alunos_EM[indice]:
+                                    alunos_EM[indice]['boletim_EM'] = boletim_EM
+
+                                for materia in materias_EM:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EM[indice]['boletim_EM'][0][f'{materia}'] = nota
+
+                                skip = True
+                            case '2':
+                                resposta = ''
+                                print('Boletim 2° Bimestre (Registro): ')
+
+                                if 'boletim_EM' not in alunos_EM[indice]:
+                                    alunos_EM[indice]['boletim_EF'] = boletim_EM
+
+                                for materia in materias_EM:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EM[indice]['boletim_EM'][1][f'{materia}'] = nota
+
+                                skip = True
+                            case '3':
+                                resposta = ''
+                                print('Boletim 3° Bimestre (Registro): ')
+
+                                if 'boletim_EM' not in alunos_EM[indice]:
+                                    alunos_EM[indice]['boletim_EM'] = boletim_EM
+
+                                for materia in materias_EM:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EM[indice]['boletim_EM'][2][f'{materia}'] = nota
+
+                                skip = True
+                            case '4':
+                                resposta = ''
+                                print('Boletim 4° Bimestre (Registro): ')
+
+                                if 'boletim_EM' not in alunos_EM[indice]:
+                                    alunos_EM[indice]['boletim_EM'] = boletim_EM
+
+                                for materia in materias_EM:
+                                    nota = int(input(f'Nota de {materia}: '))
+                                    alunos_EM[indice]['boletim_EM'][3][f'{materia}'] = nota
+
+                                skip = True
                 else:
+                    resposta = ''
                     break
-                
+
             else:
                 limpar()
 
                 print('Não tem nenhum aluno cadastrado no Ensino Fundamental I!')
                 print('Deseja cadastrar algum aluno?')
-                print(len(alunos_EFI))
 
                 resposta = str(input('Digite sua resposta - (S/N): ')).strip().upper()
 
@@ -688,6 +1211,13 @@ while loop_ex1 == True:
                     analisar = False
                     avaliar = False
                     skip = True
+                    resposta = ''
                 else:
                     cadastrar = False
+                    resposta = ''
 
+        else: # resposta_escolaridade == '0'
+            skip = False
+            cadastrar = False
+            analisar = False
+            avaliar = False
