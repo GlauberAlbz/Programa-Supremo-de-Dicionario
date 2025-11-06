@@ -28,7 +28,6 @@ reset= "\033[0m"
 
 system("cls")
 
-
 print((cyan) + '╔' + '═' * 73 + '╗')
 print('║' + (reset) + f'Oi, seja bem-vindo ao gerenciamento de aproveitamento de jogadores!'.center(73) + (cyan) + '║')
 print('╚' + '═' * 73 + '╝' + reset)
@@ -64,80 +63,115 @@ while cadas == "S":
         print('║' + (reset) + f'Digite um código novo de 1 a 999 para o novo jogador'.center(73) + (cyan) + '║')
         print('╚' + '═' * 73 + '╝\n' + reset)
 
-        codigo = input("Sua reposta: ")
+        codigo = input()
         
         if codigo == "0":
-            print("não pode")
+            print((red) + '╔' + '═' * 73 + '╗')
+            print('║' + (yellow) + f'❌ Não é permitido o número 0.'.center(72) + (red) + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
             sleep(2)
-        
+
         elif codigo.isdigit():
             codigo = int(codigo)
             
             if 1 <= codigo <= 999:
-                jogador["codigo"] = codigo
-                break
+                # Verificar se código já existe
+                codigo_repetido = False
+                for j in jogadores:
+                    if j["codigo"] == codigo:
+                        codigo_repetido = True
+                        break
+                
+                if codigo_repetido:
+                    print((red) + '╔' + '═' * 73 + '╗')
+                    print('║' + (yellow) + f'❌ Código {codigo:03} já está em uso!'.center(72) + (red) + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    sleep(2)
+                else:
+                    jogador["codigo"] = codigo
+                    break
+
+
             else:
                 print((red) + '╔' + '═' * 73 + '╗')
-                print('║' + (yellow) + f'❌ O código deve estar entre 0 e 999!'.center(73) + (red) + '║')
+                print('║' + (yellow) + f'❌ O código deve estar entre 0 e 999!'.center(72) + (red) + '║')
                 print('╚' + '═' * 73 + '╝\n' + reset)
                 sleep(2)
                 
         else:
             print((red) + '╔' + '═' * 73 + '╗')
-            print('║' + (yellow) + f'❌ Digite apenas números inteiros!'.center(73) + (red) + '║')
+            print('║' + (yellow) + f'❌ Digite apenas números inteiros!'.center(72) + (red) + '║')
             print('╚' + '═' * 73 + '╝\n' + reset)
             sleep(2)
 
-            
+    system("cls")
     
-    # Validação de nome
     while True:
-        nome = input(f"{yellow}Nome do jogador: {reset}").strip().capitalize()
-        valido = True
-
-        for c in nome:
-            if not ((c >= 'A' and c <= 'Z') or (c >= 'a' and c <= 'z') or c == ' '):
-                valido = False
-                break
+        system("cls")
+        print((cyan) + '╔' + '═' * 73 + '╗')
+        print('║' + (reset) + f'Digite o nome do Jogador'.center(73) + (cyan) + '║')
+        print('╚' + '═' * 73 + '╝\n' + reset)
         
-        
+        nome_input = input().strip().capitalize()
 
-        if nome == "":
-            print(f"{red}❌ O nome não pode estar vazio!{reset}")
+        # Verifica se está vazio
+        if nome_input == "":
+            print((red) + '╔' + '═' * 73 + '╗')
+            print('║' + (yellow) + f'❌ O nome não pode estar vazio!'.center(73) + (red) + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(1.5)
+            continue
 
-        elif not valido:
-            print(f"{red}❌ O nome não pode conter números ou caracteres especiais!{reset}")
-
-        else:
-            jogador["nome"] = nome
+        # Verifica se contém apenas letras e espaços
+        if nome_input.replace(" ", "").isalpha():
+            jogador["nome"] = nome_input
             break
+        else:
+            print((red) + '╔' + '═' * 73 + '╗')
+            print('║' + (yellow) + f'❌ O nome não pode conter números ou caracteres especiais!'.center(72) + (red) + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            sleep(1.5)
 
     # Validação das partidas jogadas
     while True:
+        system("cls")
         partidas = input(f"{yellow}Digite quantas partidas {jogador['nome']} jogou: {reset}")
         if partidas.isdigit():
             partidas = int(partidas)
             if partidas > 1391:
-                print(f"é bem improvável que {jogador['nome']} tenha jogado essa quantidade de partidas, o recorde é 1,391.")
+                print((red) + '╔' + '═' * 73 + '╗')
+                print('║' + (yellow) + f'❌ é bem improvável que {jogador['nome']} tenha jogado essa quantidade de partidas, o recorde é 1,391.'.center(73) + (red) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
             else:
                 partidas = int(partidas)
                 break
         else:
-            print(f"{red}❌ Digite um número válido de partidas.{reset}")
+            print((red) + '╔' + '═' * 73 + '╗')
+            print('║' + (yellow) + f'❌  Digite um número válido de partidas.'.center(73) + (red) + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+
     
+
     gols = []
     for i in range(partidas):
         while True:
+            system("cls")
             g = input(f"{green}Gols na partida {i+1}: {reset}")
             if g.isdigit():
                 g = int(g)
                 if g > 16:
-                    print("muito gol fi")
+                    print((red) + '╔' + '═' * 73 + '╗')
+                    print('║' + (yellow) + f'❌ Quantidade exacerbada de gols, o limite é 16.'.center(73) + (red) + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    sleep(2)
                 else:
                     gols.append(int(g))
                     break
             else:
-                print(f"{red}❌ Digite um número inteiro válido.{reset}")
+                print((red) + '╔' + '═' * 73 + '╗')
+                print('║' + (yellow) + f'❌ Digite um número inteiro válido.'.center(73) + (red) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                
     
     jogador["partidas_jogadas"] = partidas
     jogador["gols_partida"] = gols
@@ -145,16 +179,27 @@ while cadas == "S":
     
     jogadores.append(jogador)
     
-    print(f"\n{green}✅ Jogador cadastrado com sucesso!{reset}")
+    print((green) + '╔' + '═' * 73 + '╗')
+    print('║' + (green) + f'✅ Jogador cadastrado com sucesso!'.center(72) + (green) + '║')
+    print('╚' + '═' * 73 + '╝\n' + reset)
     sleep(1)
+
+    
     
     # Validação de resposta S/N novamente
     while True:
-        cadas = input(f"\n{yellow}Deseja cadastrar outro jogador? {reset}(S/N) ").upper().strip()
+        system("cls")
+        print((orange) + '╔' + '═' * 73 + '╗')
+        print('║' + (blue) + f'✅ Deseja cadastrar outro jogador? {reset}(S/N) '.center(76) + (orange) + '║')
+        print('╚' + '═' * 73 + '╝\n' + reset)
+        cadas = input().upper().strip()
         if cadas in ["S", "N"]:
             break
         else:
-            print(f"{red}❌ Digite apenas 'S' ou 'N'!{reset}")
+            print((red) + '╔' + '═' * 73 + '╗')
+            print('║' + (yellow) + f'❌ Digite apenas "S" ou "N"!'.center(73) + (red) + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            
 
 # mostra os códigos disponíveis
 
@@ -185,7 +230,10 @@ if len(jogadores) > 0:
                     
                     pergunta = str()
                     while pergunta != 'N' and pergunta != "S":
-                        pergunta = str(input("quer ver outro soccer????")).strip().upper()
+                        print((orange) + '╔' + '═' * 73 + '╗')
+                        print('║' + (blue) + f'Deseja analisar mais algum jogador?: {reset}(S/N) '.center(77) + (orange) + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        pergunta = str(input()).strip().upper()
 
                         if pergunta == "N":
                             respo_jogas = False
@@ -193,7 +241,7 @@ if len(jogadores) > 0:
                             respo_jogas == True
                             sleep(0.5)
                         else:
-                            print("Resposta Inválida, tente novamente")
+                            print(f"{red}Resposta Inválida, tente novamente" + reset)
                             sleep(2)
                             system("cls")
                             
