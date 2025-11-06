@@ -2546,6 +2546,7 @@ while looppai == True:
 
                 
                 sleep(1)
+                sys("cls")
 
                 print((cyan) + '╔' + '═' * 73 + '╗')
                 print('║' + blue + 'Digite seu gênero cadastrado no cartório [M/F]:'.center(73) + cyan + '║')
@@ -2610,6 +2611,9 @@ while looppai == True:
                                 print((cyan) + '╔' + '═' * 73 + '╗')
                                 print('║' + red + 'O número da CTPS deve ter exatamente 7 dígitos numéricos. Tente novamente'.center(73) + cyan + '║')
                                 print('╚' + '═' * 73 + '╝\n' + reset)
+                                
+                        print("")
+
                         while True:
                             sleep(1)
                             print((cyan) + '╔' + '═' * 73 + '╗')
@@ -2632,6 +2636,8 @@ while looppai == True:
                     
                     elif ctpsmodelo == "":
                         ctpsmodelo = "0"
+                
+                sys("cls")
 
                 if ctpsmodelo not in ("0", ""):
 
@@ -2655,6 +2661,8 @@ while looppai == True:
                             print('║' + red + 'Formato inválido. Tente novamente'.center(73) + cyan + '║')
                             print('╚' + '═' * 73 + '╝\n' + reset)
                             continue
+                    
+                    sys("cls")
 
                     while True:
                         sleep(1)
@@ -2676,8 +2684,10 @@ while looppai == True:
                             print('║' + red + 'Formato inválido. Tente novamente'.center(73) + cyan + '║')
                             print('╚' + '═' * 73 + '╝\n' + reset)
                             continue
-
+                    
                     sleep(1)
+
+                    sys("cls")
 
                     print((cyan) + '╔' + '═' * 73 + '╗')
                     print('║' + purple + 'Digite seu último sálario: '.center(73) + cyan + '║')
@@ -2886,7 +2896,7 @@ while looppai == True:
                     # Verifica se está vazio
                     if nome_input == "":
                         print((red) + '╔' + '═' * 73 + '╗')
-                        print('║' + (yellow) + f'❌ O nome não pode estar vazio!'.center(73) + (red) + '║')
+                        print('║' + (yellow) + f'❌ O nome não pode estar vazio!'.center(72) + (red) + '║')
                         print('╚' + '═' * 73 + '╝\n' + reset)
                         sleep(1.5)
                         continue
@@ -2908,16 +2918,18 @@ while looppai == True:
                     if partidas.isdigit():
                         partidas = int(partidas)
                         if partidas > 1391:
-                            print((red) + '╔' + '═' * 73 + '╗')
-                            print('║' + (yellow) + f'❌ é bem improvável que {jogador['nome']} tenha jogado essa quantidade de partidas, o recorde é 1,391.'.center(73) + (red) + '║')
-                            print('╚' + '═' * 73 + '╝\n' + reset)
+                            print((red) + '╔' + '═' * 94 + '╗')
+                            print('║' + (yellow) + f'❌ é bem improvável que {jogador['nome']} tenha jogado essa quantidade de partidas, o recorde é 1,391.'.center(93) + (red) + '║')
+                            print('╚' + '═' * 94 + '╝\n' + reset)
+                            sleep(1.5)
                         else:
                             partidas = int(partidas)
                             break
                     else:
                         print((red) + '╔' + '═' * 73 + '╗')
-                        print('║' + (yellow) + f'❌  Digite um número válido de partidas.'.center(73) + (red) + '║')
+                        print('║' + (yellow) + f'❌  Digite um número válido de partidas.'.center(72) + (red) + '║')
                         print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(1.5)
 
                 
 
@@ -2938,8 +2950,9 @@ while looppai == True:
                                 break
                         else:
                             print((red) + '╔' + '═' * 73 + '╗')
-                            print('║' + (yellow) + f'❌ Digite um número inteiro válido.'.center(73) + (red) + '║')
+                            print('║' + (yellow) + f'❌ Digite um número inteiro válido.'.center(72) + (red) + '║')
                             print('╚' + '═' * 73 + '╝\n' + reset)
+                            sleep(1.5)
                             
                 
                 jogador["partidas_jogadas"] = partidas
@@ -2966,8 +2979,9 @@ while looppai == True:
                         break
                     else:
                         print((red) + '╔' + '═' * 73 + '╗')
-                        print('║' + (yellow) + f'❌ Digite apenas "S" ou "N"!'.center(73) + (red) + '║')
+                        print('║' + (yellow) + f'❌ Digite apenas "S" ou "N"!'.center(72) + (red) + '║')
                         print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(1.5)
                         
 
             # mostra os códigos disponíveis
@@ -3266,7 +3280,7 @@ while looppai == True:
 
     while escolha != "1" and escolha != "2" and escolha != "3":
         print(cyan + bold + '╔' + '═' * 73 + '╗')
-        print('║' + white + f'Votação encerrada'.center(73) + cyan + '║')
+        print('║' + white + f'Tarefa encerrada'.center(73) + cyan + '║')
         print('╠' + '═' * 73 + '╣')
         print('║' + white + '1 - Voltar para o menu'.center(73) + cyan + '║')
         print('║' + yellow + '2 - Outro Login'.center(73) + cyan + '║')
