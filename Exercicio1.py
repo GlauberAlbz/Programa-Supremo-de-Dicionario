@@ -7,10 +7,9 @@
     - Faça um programa que Cadastre os nomes dos alunos, suas notas e suas médias. No final mostre:
     - O nome do aluno, sua média e sua situação, caso o usuário queria ver mais informações exiba as notas dos bimestres.
 '''
-import random as rd
 from os import system as sys
 from os import name as os_name
-from time import sleep
+import copy
 
 black= "\033[0;30m" 
 red= "\033[0;31m"
@@ -829,7 +828,7 @@ while loop_ex1:
                                 print('Boletim 1° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFI[indice]:
-                                    alunos_EFI[indice]['boletim_EF'] = boletim_EF
+                                    alunos_EFI[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
                                     
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -841,7 +840,7 @@ while loop_ex1:
                                 print('Boletim 2° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFI[indice]:
-                                    alunos_EFI[indice]['boletim_EF'] = boletim_EF
+                                    alunos_EFI[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -853,7 +852,7 @@ while loop_ex1:
                                 print('Boletim 3° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFI[indice]:
-                                    alunos_EFI[indice]['boletim_EF'] = boletim_EF
+                                    alunos_EFI[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -865,7 +864,7 @@ while loop_ex1:
                                 print('Boletim 4° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFI[indice]:
-                                    alunos_EFI[indice]['boletim_EF'] = boletim_EF
+                                    alunos_EFI[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -990,7 +989,7 @@ while loop_ex1:
                                 print('Boletim 1° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFII[indice]:
-                                    alunos_EFII[indice]['boletim_EF'] = boletim_EF
+                                    alunos_EFII[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -1002,7 +1001,7 @@ while loop_ex1:
                                 print('Boletim 2° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFII[indice]:
-                                    alunos_EFII[indice]['boletim_EF'] = boletim_EF
+                                    alunos_EFII[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -1014,7 +1013,7 @@ while loop_ex1:
                                 print('Boletim 3° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFII[indice]:
-                                    alunos_EFII[indice]['boletim_EF'] = boletim_EF
+                                    alunos_EFII[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -1026,7 +1025,7 @@ while loop_ex1:
                                 print('Boletim 4° Bimestre (Registro): ')
 
                                 if 'boletim_EF' not in alunos_EFII[indice]:
-                                    alunos_EFII[indice]['boletim_EF'] = boletim_EF
+                                    alunos_EFII[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
                                 for materia in materias_EF:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -1151,8 +1150,8 @@ while loop_ex1:
                                 print('Boletim 1° Bimestre (Registro): ')
 
                                 if 'boletim_EM' not in alunos_EM[indice]:
-                                    alunos_EM[indice]['boletim_EM'] = boletim_EM
-
+                                    alunos_EM[indice]['boletim_EM'] = copy.deepcopy(boletim_EM)
+                                
                                 for materia in materias_EM:
                                     nota = int(input(f'Nota de {materia}: '))
                                     alunos_EM[indice]['boletim_EM'][0][f'{materia}'] = nota
@@ -1163,7 +1162,7 @@ while loop_ex1:
                                 print('Boletim 2° Bimestre (Registro): ')
 
                                 if 'boletim_EM' not in alunos_EM[indice]:
-                                    alunos_EM[indice]['boletim_EF'] = boletim_EM
+                                    alunos_EM[indice]['boletim_EF'] = copy.deepcopy(boletim_EM)
 
                                 for materia in materias_EM:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -1175,7 +1174,7 @@ while loop_ex1:
                                 print('Boletim 3° Bimestre (Registro): ')
 
                                 if 'boletim_EM' not in alunos_EM[indice]:
-                                    alunos_EM[indice]['boletim_EM'] = boletim_EM
+                                    alunos_EM[indice]['boletim_EM'] = copy.deepcopy(boletim_EM)
 
                                 for materia in materias_EM:
                                     nota = int(input(f'Nota de {materia}: '))
@@ -1187,7 +1186,7 @@ while loop_ex1:
                                 print('Boletim 4° Bimestre (Registro): ')
 
                                 if 'boletim_EM' not in alunos_EM[indice]:
-                                    alunos_EM[indice]['boletim_EM'] = boletim_EM
+                                    alunos_EM[indice]['boletim_EM'] = copy.deepcopy(boletim_EM)
 
                                 for materia in materias_EM:
                                     nota = int(input(f'Nota de {materia}: '))
