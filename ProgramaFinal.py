@@ -131,33 +131,40 @@ while looppai == True:
             print(red + "Opção inválida. Tente novamente." + reset)
             sleep(1.5)
             sys("cls")
+    casos = str()
+    while casos not in ["0","1","2","3","4","5",]:
+        sys("cls")
+        print(cyan + bold + '╔' + '═' * 73 + '╗')
+        print('║' + white + 'Lista de Programas'.center(73) + cyan + '║')
+        print('╠' + '═' * 73 + '╣')
+        print('║' + ' ' * 73 + cyan + '║')
 
-    sys("cls")
+        print('║' + pink + '1 - Sistema de gerenciamento de notas.'.center(73) + cyan + '║')
+        print('║' + ' ' * 73 + cyan + '║')
 
-    print(cyan + bold + '╔' + '═' * 73 + '╗')
-    print('║' + white + 'Lista de Programas'.center(73) + cyan + '║')
-    print('╠' + '═' * 73 + '╣')
-    print('║' + ' ' * 73 + cyan + '║')
+        print('║' + red + '2 - Jogo de rolar dado.'.center(73) + cyan + '║')
+        print('║' + ' ' * 73 + cyan + '║')
 
-    print('║' + pink + '1 - Sistema de gerenciamento de notas'.center(73) + cyan + '║')
-    print('║' + ' ' * 73 + cyan + '║')
+        print('║' + blue + '3 - Consultor de Carteira de Trabalho.'.center(73) + cyan + '║')
+        print('║' + ' ' * 73 + cyan + '║')
+    
+        print('║' + orange + '4 - Análise de aproveitamendo de jogadores.'.center(73) + cyan + '║')
+        print('║' + ' ' * 73 + cyan + '║')
 
-    print('║' + red + '2 - Jogo de rolar dado'.center(73) + cyan + '║')
-    print('║' + ' ' * 73 + cyan + '║')
+        print('║' + yellow + '5 - Pesquisa em um grupo de pessoas.'.center(73) + cyan + '║')
+        print('║' + ' ' * 73 + cyan + '║')
+        print('║' + purple + '0 - Encerrar Programa.'.center(73) + cyan + '║')
+        print('║' + ' ' * 73 + cyan + '║')
+        print('╚' + '═' * 73 + '╝' + reset)
 
-    print('║' + blue + '3 - Consultor de Carteira de Trabalho'.center(73) + cyan + '║')
-    print('║' + ' ' * 73 + cyan + '║')
-   
-    print('║' + orange + '4 - Análise de aproveitamendo de jogadores'.center(73) + cyan + '║')
-    print('║' + ' ' * 73 + cyan + '║')
+        casos = str(input("Qual programa deseja rodar?: ")).strip()
 
-    print('║' + yellow + '5 - Pesquisa em um grupo de pessoas'.center(73) + cyan + '║')
-    print('║' + ' ' * 73 + cyan + '║')
-
-    print('║' + ' ' * 73 + cyan + '║')
-    print('╚' + '═' * 73 + '╝' + reset)
-
-    casos = str(input("Qual programa deseja rodar?")).strip()
+        if casos not in ["0","1","2","3","4","5",]:
+            sys("cls")
+            print((red) + '╔' + '═' * 73 + '╗')
+            print('║' + red + 'Opção inexistente, Tente novamente!'.center(73) + red + '║')
+            print('╚' + '═' * 73 + '╝\n' + reset)
+            input("")
     
     match casos:
         case "1":
@@ -174,7 +181,7 @@ while looppai == True:
                 print(cyan + '╔' + '═' * 73 + '╗')
                 print(f'║' + yellow + f'Jogador {c+1}'.center(73) + cyan + '║')
                 print('╚' + '═' * 73 + '╝' + reset)
-                jogadores['nick'] = str(input('Por favor digite o seu nickname antes de iniciar: '))
+                jogadores['nick'] = str(input('Por favor digite o seu nickname antes de iniciar: ')).capitalize().strip()
                 jogadores['dado'] = rd.randint(1, 6)
                 lista_jogadores.append(jogadores.copy())
                 
