@@ -1107,12 +1107,14 @@ while looppai == True:
                 print('║' + (reset) + f'Essa lista possuí apenas 1 candidato, logo ninguém está acima da média.'.center(73) + (purple) + '║')
                 print('╚' + '═' * 73 + '╝\n' + reset)
                 verificar = True
-            print("")
+            
 
         case "0":
             looppai = False
             continue
-            
+    print("")
+    print()
+
     escolha = str()
 
     while escolha != "1" and escolha != "2" and escolha != "3":
@@ -1136,6 +1138,7 @@ while looppai == True:
             print(red + "Opção inválida. Tente novamente." + reset)
             sleep(1.5)
             sys("cls")
+
 sys("cls")
 print(cyan + bold + '╔' + '═' * 73 + '╗')
 print('║' + white + 'Tarefa encerrada'.center(73) + cyan + '║')
