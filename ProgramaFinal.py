@@ -176,6 +176,7 @@ while looppai == True:
             alunos_EFII = list()  # Ensino Fundamental II
             alunos_EM = list()  # Ensino Médio
             aluno = dict()
+            media = float()
 
             bimestre_1_EF = dict()
             bimestre_2_EF = dict()
@@ -197,7 +198,7 @@ while looppai == True:
             resposta_escolaridade = str()
             resposta_aluno = str()
             indice = int()
-            nota = int()
+            nota = float()
 
             skip = False  # Serve para pular partes do programa para evitar casos de redundância
             registro_boletim = False
@@ -259,15 +260,42 @@ while looppai == True:
                     print('╚' + '═' * 73 + '╝' + reset)
                     print()
 
-                    aluno['nome'] = str(input('Digite o nome do(da) aluno(a): '))
+                    while True:
+                        nome = input('Digite o nome completo do(da) aluno(a): ').strip()
+                        partes = nome.split()
+
+                        if (nome and len(nome) >= 6 and len(partes) >= 2 and all(
+                                c.isalpha() or c.isspace() for c in nome) and all(
+                                len(p) > 1 for p in partes)):
+                            nome = ' '.join(p.capitalize() for p in partes)
+                            aluno['nome'] = str(nome)
+                            break
+                        else:
+                            limpar()
+                            print(cyan + '╔' + '═' * 73 + '╗')
+                            print('║' + yellow + ' CADASTRO DE ALUNO '.center(73) + cyan + '║')
+                            print('╚' + '═' * 73 + '╝' + reset)
+                            print()
+
+                            print(red + 'Nome inválido! Digite nome e sobrenome (Sem abreviações).' + reset)
+
+                    limpar()
+                    print(cyan + '╔' + '═' * 73 + '╗')
+                    print('║' + yellow + ' CADASTRO DE ALUNO '.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    print()
+                    print(cyan + '╔' + '═' * 73 + '╗')
+                    print('║' + yellow + 'Aluno:' + f'{nome}'.center(67) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    print()
                     print(cyan + '╔' + '═' * 73 + '╗')
                     print('║' + yellow + 'Grades:'.center(73) + cyan + '║')
                     print('╠' + '═' * 73 + '╣')
                     for grades in range(1, 10):
-                        print('║' + f'{grades} - {grades}º ano do Ensino Fundamental'.center(73) + '║')
+                        print('║' + f'{grades} - {grades}º Ano do Ensino Fundamental'.center(73) + '║')
                     print('╠' + '═' * 73 + '╣')
                     for grades in range(1, 4):
-                        print('║' + f'{9 + grades} - {grades}ª série do Ensino Médio'.center(73) + '║')
+                        print('║' + f'{9 + grades} - {grades}ª Série do Ensino Médio'.center(73) + '║')
                     print('╚' + '═' * 73 + '╝' + reset)
 
                     aluno['grade'] = str(input('Digite a grade do(da) aluno(a): ')).strip()
@@ -279,7 +307,10 @@ while looppai == True:
                         print('║' + yellow + ' CADASTRO DE ALUNO '.center(73) + cyan + '║')
                         print('╚' + '═' * 73 + '╝' + reset)
                         print()
-                        print(f'Digite o nome do(da) aluno(a): {aluno['nome']}')
+                        print(cyan + '╔' + '═' * 73 + '╗')
+                        print('║' + yellow + 'Aluno:' + f'{nome}'.center(67) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝' + reset)
+                        print()
                         print(cyan + '╔' + '═' * 73 + '╗')
                         print('║' + yellow + 'Grades:'.center(73) + cyan + '║')
                         print('╠' + '═' * 73 + '╣')
@@ -295,14 +326,16 @@ while looppai == True:
                     aluno['grade'] = int(aluno['grade'])
 
                     # Adicionando a escolaridade do aluno
-                    if aluno['grade'] > 0 and aluno['grade'] < 6:
+                    if 0 < aluno['grade'] < 6:
                         aluno['escolaridade'] = 'Ensino Fundamental I'
-                    elif aluno['grade'] > 5 and aluno['grade'] < 10:
+                    elif 5 < aluno['grade'] < 10:
                         aluno['escolaridade'] = 'Ensino Fundamental II'
                     else:
                         aluno['escolaridade'] = 'Ensino Médio'
                         aluno['grade'] = aluno['grade'] - 9
 
+                    grade_exibicao = aluno['grade']
+                    escolaridade_exibicao = aluno['escolaridade']
                     # Adicionando o aluno em uma lista com outros da mesma escolaridade
                     if aluno['escolaridade'] == 'Ensino Fundamental I':
                         alunos_EFI.append(aluno.copy())
@@ -314,6 +347,21 @@ while looppai == True:
                         alunos_EM.append(aluno.copy())
                         aluno = dict()
 
+                    limpar()
+
+                    print(cyan + '╔' + '═' * 73 + '╗')
+                    print('║' + yellow + ' CADASTRO DE ALUNO '.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    print()
+                    print(cyan + '╔' + '═' * 73 + '╗')
+                    if escolaridade_exibicao == 'Ensino Fundamental I' or escolaridade_exibicao == 'Ensino Fundamental II':
+                        print('║' + yellow + 'Aluno:' + f'{nome} - {grade_exibicao}° Ano - {escolaridade_exibicao}'.center(
+                            67) + cyan + '║')
+                    else:
+                        print('║' + yellow + 'Aluno:' + f'{nome} - {grade_exibicao}ª Série - {escolaridade_exibicao}'.center(
+                            67) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    print()
                     print(green + 'Você deseja cadastrar outro aluno?' + reset)
                     resposta = str(input('Digite sua resposta - (S/N) ')).strip().upper()
 
@@ -1301,9 +1349,44 @@ while looppai == True:
                                             if 'boletim_EF' not in alunos_EFI[indice]:
                                                 alunos_EFI[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EF:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EFI[indice]['boletim_EF'][0][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 1° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EFI[indice]['nome']} - {alunos_EFI[indice]['grade']}° Ano - {alunos_EFI[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EFI[indice]['boletim_EF'][0][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EF)
+                                            alunos_EFI[indice]['boletim_EF'][0]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '2':
@@ -1315,9 +1398,44 @@ while looppai == True:
                                             if 'boletim_EF' not in alunos_EFI[indice]:
                                                 alunos_EFI[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EF:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EFI[indice]['boletim_EF'][1][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 2° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EFI[indice]['nome']} - {alunos_EFI[indice]['grade']}° Ano - {alunos_EFI[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EFI[indice]['boletim_EF'][1][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EF)
+                                            alunos_EFI[indice]['boletim_EF'][1]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '3':
@@ -1329,9 +1447,44 @@ while looppai == True:
                                             if 'boletim_EF' not in alunos_EFI[indice]:
                                                 alunos_EFI[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EF:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EFI[indice]['boletim_EF'][2][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 3° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EFI[indice]['nome']} - {alunos_EFI[indice]['grade']}° Ano - {alunos_EFI[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EFI[indice]['boletim_EF'][2][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EF)
+                                            alunos_EFI[indice]['boletim_EF'][2]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '4':
@@ -1343,9 +1496,44 @@ while looppai == True:
                                             if 'boletim_EF' not in alunos_EFI[indice]:
                                                 alunos_EFI[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EF:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EFI[indice]['boletim_EF'][3][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 4° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EFI[indice]['nome']} - {alunos_EFI[indice]['grade']}° Ano - {alunos_EFI[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EFI[indice]['boletim_EF'][3][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EF)
+                                            alunos_EFI[indice]['boletim_EF'][3]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                             else:
@@ -1529,9 +1717,44 @@ while looppai == True:
                                             if 'boletim_EF' not in alunos_EFII[indice]:
                                                 alunos_EFII[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EF:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EFII[indice]['boletim_EF'][0][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 1° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EFII[indice]['nome']} - {alunos_EFII[indice]['grade']}° Ano - {alunos_EFII[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EFII[indice]['boletim_EF'][0][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EF)
+                                            alunos_EFII[indice]['boletim_EF'][0]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '2':
@@ -1543,9 +1766,44 @@ while looppai == True:
                                             if 'boletim_EF' not in alunos_EFII[indice]:
                                                 alunos_EFII[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EF:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EFII[indice]['boletim_EF'][1][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 2° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EFII[indice]['nome']} - {alunos_EFII[indice]['grade']}° Ano - {alunos_EFII[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EFII[indice]['boletim_EF'][1][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EF)
+                                            alunos_EFII[indice]['boletim_EF'][1]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '3':
@@ -1557,9 +1815,44 @@ while looppai == True:
                                             if 'boletim_EF' not in alunos_EFII[indice]:
                                                 alunos_EFII[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EF:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EFII[indice]['boletim_EF'][2][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 3° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EFII[indice]['nome']} - {alunos_EFII[indice]['grade']}° Ano - {alunos_EFII[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EFII[indice]['boletim_EF'][2][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EF)
+                                            alunos_EFII[indice]['boletim_EF'][2]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '4':
@@ -1571,9 +1864,44 @@ while looppai == True:
                                             if 'boletim_EF' not in alunos_EFII[indice]:
                                                 alunos_EFII[indice]['boletim_EF'] = copy.deepcopy(boletim_EF)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EF:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EFII[indice]['boletim_EF'][3][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 4° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EFII[indice]['nome']} - {alunos_EFII[indice]['grade']}° Ano1 - {alunos_EFII[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EFII[indice]['boletim_EF'][3][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EF)
+                                            alunos_EFII[indice]['boletim_EF'][3]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                             else:
@@ -1758,9 +2086,44 @@ while looppai == True:
                                             if 'boletim_EM' not in alunos_EM[indice]:
                                                 alunos_EM[indice]['boletim_EM'] = copy.deepcopy(boletim_EM)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EM:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EM[indice]['boletim_EM'][0][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 1° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EM[indice]['nome']} - {alunos_EM[indice]['grade']}ª Série - {alunos_EM[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EM[indice]['boletim_EM'][0][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EM)
+                                            alunos_EM[indice]['boletim_EM'][0]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '2':
@@ -1772,9 +2135,44 @@ while looppai == True:
                                             if 'boletim_EM' not in alunos_EM[indice]:
                                                 alunos_EM[indice]['boletim_EM'] = copy.deepcopy(boletim_EM)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EM:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EM[indice]['boletim_EM'][1][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 2° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EM[indice]['nome']} - {alunos_EM[indice]['grade']}ª Série - {alunos_EM[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EM[indice]['boletim_EM'][1][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EM)
+                                            alunos_EM[indice]['boletim_EM'][1]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '3':
@@ -1786,9 +2184,44 @@ while looppai == True:
                                             if 'boletim_EM' not in alunos_EM[indice]:
                                                 alunos_EM[indice]['boletim_EM'] = copy.deepcopy(boletim_EM)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EM:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EM[indice]['boletim_EM'][2][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 3° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EM[indice]['nome']} - {alunos_EM[indice]['grade']}ª Série - {alunos_EM[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EM[indice]['boletim_EM'][2][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EM)
+                                            alunos_EM[indice]['boletim_EM'][2]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                                         case '4':
@@ -1800,9 +2233,44 @@ while looppai == True:
                                             if 'boletim_EM' not in alunos_EM[indice]:
                                                 alunos_EM[indice]['boletim_EM'] = copy.deepcopy(boletim_EM)
 
+                                            soma_notas = 0.0
                                             for materia in materias_EM:
-                                                nota = int(input(f'Nota de {materia}: '))
-                                                alunos_EM[indice]['boletim_EM'][3][f'{materia}'] = nota
+                                                while True:
+                                                    limpar()
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Boletim 4° Bimestre (Registro)'.center(73) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+                                                    print(cyan + '╔' + '═' * 73 + '╗')
+                                                    print(
+                                                        '║' + yellow + 'Aluno:' + f"{alunos_EM[indice]['nome']} - {alunos_EM[indice]['grade']}ª Série - {alunos_EM[indice]['escolaridade']}".center(
+                                                            67) + cyan + '║')
+                                                    print('╚' + '═' * 73 + '╝' + reset)
+
+                                                    if 'erro' in locals():
+                                                        print(red + 'Valor inválido! Digite um número entre 0 e 10.' + reset)
+                                                        print()
+                                                        del erro
+
+                                                    entrada = input(f'Nota de {materia}: ').strip()
+                                                    entrada = entrada.replace(',', '.')
+
+                                                    try:
+                                                        nota = float(entrada)
+                                                    except ValueError:
+                                                        erro = True
+                                                        continue
+
+                                                    if 0.0 <= nota <= 10.0:
+                                                        nota = round(nota, 2)
+                                                        alunos_EM[indice]['boletim_EM'][3][materia] = nota
+                                                        soma_notas += nota
+                                                        break
+                                                    else:
+                                                        erro = True
+
+                                            media = soma_notas / len(materias_EM)
+                                            alunos_EM[indice]['boletim_EM'][3]['Média das Notas'] = round(media, 1)
 
                                             skip = True
                             else:
@@ -1847,6 +2315,7 @@ while looppai == True:
                         cadastrar = False
                         analisar = False
                         avaliar = False
+
         case "2":
             jogadores = dict()
             lista_jogadores = list()
