@@ -28,7 +28,6 @@ reset= "\033[0m"
 
 system("cls")
 
-
 print((cyan) + '╔' + '═' * 73 + '╗')
 print('║' + (reset) + f'Oi, seja bem-vindo ao gerenciamento de aproveitamento de jogadores!'.center(73) + (cyan) + '║')
 print('╚' + '═' * 73 + '╝' + reset)

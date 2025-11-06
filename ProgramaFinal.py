@@ -50,6 +50,7 @@
 import random as rd
 from os import system as sys
 from time import sleep
+import datetime as dt
 
 black= "\033[0;30m" 
 red= "\033[0;31m"
@@ -65,6 +66,7 @@ white = "\033[0;37m"
 gray = white + black
 reset= "\033[0m"
 bold = "\033[1m"
+
 
 usuarios_cadastrados = []  # lista composta com [nome, senha]
 looplogin = True
@@ -132,40 +134,777 @@ while looppai == True:
 
     sys("cls")
 
+    print(cyan + bold + '╔' + '═' * 73 + '╗')
+    print('║' + white + 'Lista de Programas'.center(73) + cyan + '║')
+    print('╠' + '═' * 73 + '╣')
+    print('║' + ' ' * 73 + cyan + '║')
+
+    print('║' + pink + '1 - Sistema de gerenciamento de notas'.center(73) + cyan + '║')
+    print('║' + ' ' * 73 + cyan + '║')
+
+    print('║' + red + '2 - Jogo de rolar dado'.center(73) + cyan + '║')
+    print('║' + ' ' * 73 + cyan + '║')
+
+    print('║' + blue + '3 - Consultor de Carteira de Trabalho'.center(73) + cyan + '║')
+    print('║' + ' ' * 73 + cyan + '║')
+   
+    print('║' + orange + '4 - Análise de aproveitamendo de jogadores'.center(73) + cyan + '║')
+    print('║' + ' ' * 73 + cyan + '║')
+
+    print('║' + yellow + '5 - Pesquisa em um grupo de pessoas'.center(73) + cyan + '║')
+    print('║' + ' ' * 73 + cyan + '║')
+
+    print('║' + ' ' * 73 + cyan + '║')
+    print('╚' + '═' * 73 + '╝' + reset)
+
     casos = str(input("Qual programa deseja rodar?")).strip()
     
     match casos:
         case "1":
             1
         case "2":
-            2
+            jogadores = dict()
+            lista_jogadores = list()
+
+            sys('cls')
+            for c in range(0,4):
+
+                sys('cls')
+
+                print(cyan + '╔' + '═' * 73 + '╗')
+                print(f'║' + yellow + f'Jogador {c+1}'.center(73) + cyan + '║')
+                print('╚' + '═' * 73 + '╝' + reset)
+                jogadores['nick'] = str(input('Por favor digite o seu nickname antes de iniciar: '))
+                jogadores['dado'] = rd.randint(1, 6)
+                lista_jogadores.append(jogadores.copy())
+                
+                sys('cls')
+
+                print(cyan + '╔' + '═' * 73 + '╗')
+                print('║' + yellow + f'Jogador {c+1}'.center(73) + cyan + '║')
+                print('╠' + '═' * 73 + '╣')
+                print('║' + reset + f'Seja bem vindo(a) {lista_jogadores[c]['nick']}!'.center(73) + cyan + '║')
+                print('║' + reset + 'Aqui você irá disputar com outros jogadores em uma competição de dados.'.center(73) + cyan + '║')
+                print('║' + reset + 'O jogador que tirar o maior valor vence o jogo!'.center(73) + cyan + '║')
+                print('╚' + '═' * 73 + '╝' + reset)
+                input('Se estiver pronto para começar pressione ENTER...\n')
+
+                sys('cls')
+
+                for letra in '🎲 Vamos rolar os dados! 🎲':
+                    print(letra, end='', flush=True)
+                    sleep(0.05)
+                sleep(0.25)
+
+                sys('cls')
+
+                for pontinhos in range(0,6):
+                    for ponto in range(0,3):
+                        print('.', end='', flush=True)
+                        sleep(0.1)
+                    sys('cls')
+
+                if lista_jogadores[c]['dado'] <= 2:
+                    print(cyan + '╔' + '═' * 73 + '╗')
+                    print('║' + reset + f'Que pena {lista_jogadores[c]['nick']}, você tirou {lista_jogadores[c]['dado']}...'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    input('Pressione ENTER para prosseguir...')
+                elif lista_jogadores[c]['dado'] > 2 and lista_jogadores[c]['dado'] <= 4:
+                    print(cyan + '╔' + '═' * 73 + '╗')
+                    print('║' + reset + f'{lista_jogadores[c]['nick']}, você tirou {lista_jogadores[c]['dado']}.'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    input('Pressione ENTER para prosseguir...')
+                elif lista_jogadores[c]['dado'] > 4 and lista_jogadores[c]['dado'] < 6:
+                    print(cyan + '╔' + '═' * 73 + '╗')
+                    print('║' + reset + f'Parabéns {lista_jogadores[c]['nick']}! Você tirou {lista_jogadores[c]['dado']}!'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    input('Pressione ENTER para prosseguir...')
+                else:
+                    print(cyan + '╔' + '═' * 73 + '╗')
+                    print('║' + reset + f'Que incrível {lista_jogadores[c]['nick']}!!! Você tirou {lista_jogadores[c]['dado']}!!!'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    input('Pressione ENTER para prosseguir...')
+
+            sys('cls')
+
+            for letra in 'O resultado dos jogadores são:':
+                print(letra, end='', flush=True)
+                sleep(0.05)
+            print()
+
+            # Jogador 1:
+            for letra in f'{lista_jogadores[0]['nick']} tirou ':
+                print(letra, end='', flush=True)
+                sleep(0.1)
+            sleep(1)
+            for letra in f'{lista_jogadores[0]['dado']} no dado.':
+                print(letra, end='', flush=True)
+                sleep(0.05)
+            print()
+
+            # Jogador 2:
+            for letra in f'{lista_jogadores[1]['nick']} tirou ':
+                print(letra, end='', flush=True)
+                sleep(0.1)
+            sleep(1)
+            for letra in f'{lista_jogadores[1]['dado']} no dado.':
+                print(letra, end='', flush=True)
+                sleep(0.05)
+            print()
+
+            # Jogador 3:
+            for letra in f'{lista_jogadores[2]['nick']} tirou ':
+                print(letra, end='', flush=True)
+                sleep(0.1)
+            sleep(1)
+            for letra in f'{lista_jogadores[2]['dado']} no dado.':
+                print(letra, end='', flush=True)
+                sleep(0.05)
+            print()
+
+            # Jogador 4:
+            for letra in f'{lista_jogadores[3]['nick']} tirou ':
+                print(letra, end='', flush=True)
+                sleep(0.1)
+            sleep(1)
+            for letra in f'{lista_jogadores[3]['dado']} no dado.':
+                print(letra, end='', flush=True)
+                sleep(0.05)
+            print()
+
+            sys('cls')
+
+            # Cálculo do ranking dos jogadores
+            for i in range(len(lista_jogadores)):
+                for j in range(i + 1, len(lista_jogadores)):
+                    if lista_jogadores[i]['dado'] < lista_jogadores[j]['dado']:
+                        lista_jogadores[i], lista_jogadores[j] = lista_jogadores[j], lista_jogadores[i]
+
+            # Ranking dos Jogadores
+            print(cyan + '╔' + '═' * 73 + '╗')
+            print('╠' + reset + '🏆 O ranking dos jogadores:'.center(72) + cyan + '╣')
+            print('║' + yellow + f'1º lugar: {lista_jogadores[0]['nick']} com {lista_jogadores[0]['dado']}'.center(73) + cyan + '║')
+            print('║' + gray + f'2º lugar: {lista_jogadores[1]['nick']} com {lista_jogadores[1]['dado']}'.center(73) + cyan + '║')
+            print('║' + brown + f'3º lugar: {lista_jogadores[2]['nick']} com {lista_jogadores[2]['dado']}'.center(73) + cyan + '║')
+            print('║' + reset + f'4º lugar: {lista_jogadores[3]['nick']} com {lista_jogadores[3]['dado']}'.center(73) + cyan + '║')
+            print('╚' + '═' * 73 + '╝' + reset)
+
         case "3":
-            3
-        case "4":
-            4
-        case "5":
+            loop= "S"
+
+            pessoa = {
+                "nome": "",
+                "genero": "",
+                "nasc": "",
+                "ctps": "",
+                "idade": "",
+                "contrato": "",
+                "inicio": "",
+                "salario": "",
+                "aposenta": "",
+                "idadeAposenta": "",
+                "contribuicao": ""
+                }
+
+            while loop == "S":
+
+                sys('cls')
+
+                sleep(2)
+
+                hj=dt.date.today()
+                ctpsmodelo= "1"
+
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + (reset) + f'Digite seu nome: '.center(73) + (cyan) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                pessoa["nome"]= input()
+                
+                
+                while True:
+                    sys("cls")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + 'Digite sua data de nascimento [DD/MM/AAAA]: '.center(73) + (cyan) + '║')
+                    print('║' + ' ' * 73 + cyan + '║')
+                    print('║' + blue + 'Use o formato DD/MM/AAAA'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    pessoa["nasc"] = input()
+
+                    if len(pessoa["nasc"]) != 10 or pessoa["nasc"][2] != '/' or pessoa["nasc"][5] != '/':
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'Use o formato DD/MM/AAAA'.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+                        continue
+
+                    dia, mes, ano = pessoa["nasc"].split('/')
+
+                    if not (dia.isdigit() and mes.isdigit() and ano.isdigit()):
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'Use apenas números na data'.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+                        continue
+
+                    dia = int(dia)
+                    mes = int(mes)
+                    ano = int(ano)
+
+                    if ano < 1900 or ano > hj.year:
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'Ano inválido'.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+                        continue
+
+                    if mes < 1 or mes > 12:
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'Mês inválido'.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+                        continue
+
+                    diasPorMes = [31, 29 if (ano % 4 == 0 and (ano % 100 != 0 or ano % 400 == 0)) else 28,
+                                    31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                    if dia < 1 or dia >diasPorMes[mes - 1]:
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'Dia inválido para o mês informado'.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+                        continue
+
+                    datanasc = dt.date(ano, mes, dia)
+
+                    if datanasc > hj:
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'A data de nascimento não pode ser no futuro'.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+                        continue
+
+                    if hj.year - ano > 120:
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'Idade acima de 120 anos parece incorreta'.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+                        continue
+                    break
+
+                
+                sleep(1)
+
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + blue + 'Digite seu gênero cadastrado no cartório [M/F]:'.center(73) + cyan + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                pessoa["genero"]= (input().upper().strip())
+
+                sys("cls")
+                
+                while pessoa["genero"] not in ("M", "F"):
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + red + 'Gênero inválido'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    sleep(1)
+                    
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + blue + 'Digite seu gênero cadastrado no cartório [M/F]:'.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    pessoa["genero"]= (input().upper().strip())
+
+                    sys("cls")
+
+                pessoa["idade"] = hj.year - datanasc.year - ((hj.month, hj.day) < (datanasc.month, datanasc.day))
+
+                while ctpsmodelo not in ("0", ""):
+                    sleep(1)
+                    ctpsmodelo= (input(f"{pink}O modelo da sua CTPS é antigo ou novo? {green}[Digite '?' para mais informações]{reset}[{yellow}A{reset} -> {yellow}Antigo{reset}/ {orange}N{reset} -> {orange}Novo{reset}]: {reset}").upper().strip())
+
+                    if ctpsmodelo not in ("0", "", "A", "N", "?", "1"):
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'Carteira de trabalho inválida '.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        continue
+                    
+                    if ctpsmodelo == 'N':
+                        sleep(1)
+                        sys('cls')
+                        while True:
+                            sleep(1)
+                            print((cyan) + '╔' + '═' * 73 + '╗')
+                            print('║' + blue + 'Digite seu CPF [Sem pontos, traços ou espaços - 11 dígitos]: '.center(73) + cyan + '║')
+                            print('╚' + '═' * 73 + '╝\n' + reset)
+                            pessoa["ctps"] = input()
+                            if len(pessoa["ctps"]) == 11 and pessoa["ctps"].isdigit():
+                                break  
+                            else:
+                                print((cyan) + '╔' + '═' * 73 + '╗')
+                                print('║' + red + 'O CPF deve ter exatamente 11 dígitos numéricos. Tente novamente'.center(73) + cyan + '║')
+                                print('╚' + '═' * 73 + '╝\n' + reset)
+                        break  
+                    
+                    elif ctpsmodelo == 'A':
+                        sys('cls')
+                        while True:
+                            sleep(1)
+                            print((cyan) + '╔' + '═' * 73 + '╗')
+                            print('║' + purple + 'Digite o número da sua carteira de trabalho [7 dígitos]: '.center(73) + cyan + '║')
+                            print('╚' + '═' * 73 + '╝\n' + reset)
+                            ct = input()
+                            if len(ct) == 7 and ct.isdigit():
+                                break
+                            else:
+                                print((cyan) + '╔' + '═' * 73 + '╗')
+                                print('║' + red + 'O número da CTPS deve ter exatamente 7 dígitos numéricos. Tente novamente'.center(73) + cyan + '║')
+                                print('╚' + '═' * 73 + '╝\n' + reset)
+                        while True:
+                            sleep(1)
+                            print((cyan) + '╔' + '═' * 73 + '╗')
+                            print('║' + purple + 'Digite a série da sua carteira de trabalho [4 dígitos]: '.center(73) + cyan + '║')
+                            print('╚' + '═' * 73 + '╝\n' + reset)
+                            ps = input()
+                            if len(ps) == 4 and ps.isdigit():
+                                break 
+                            else:
+                                print((cyan) + '╔' + '═' * 73 + '╗')
+                                print('║' + red + 'A série da CTPS deve ter exatamente 4 dígitos numéricos. Tente novamente'.center(73) + cyan + '║')
+                                print('╚' + '═' * 73 + '╝\n' + reset)
+                        pessoa["ctps"]= ct+ps
+                        break
+                    
+                    elif ctpsmodelo == '?':
+                        sys('cls')
+                        sleep(1)
+                        print(f"{orange}Número da CTPS Digital (novo) -> Use o CPF para registro e consulta.\n\n{yellow}Número da CTPS Antiga (antigo) -> Use o Número e Série que constam na página de identificação do documento físico.{reset}")
+                    
+                    elif ctpsmodelo == "":
+                        ctpsmodelo = "0"
+
+                if ctpsmodelo not in ("0", ""):
+
+                    while True:
+                        sleep(1)
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + purple + 'Digite o ano de contratação do seu contrato atual [AAAA]: '.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        pessoa["contrato"] = (input())
+                        if len(pessoa["contrato"]) == 4 and pessoa["contrato"].isdigit():
+                            pessoa["contrato"] = int(pessoa["contrato"])
+                            if hj.year - 100 <= pessoa["contrato"] <= hj.year and pessoa["contrato"] >= ano:
+                                break
+                            else:
+                                print((cyan) + '╔' + '═' * 73 + '╗')
+                                print('║' + red + 'Ano de contratação inválido'.center(73) + cyan + '║')
+                                print('╚' + '═' * 73 + '╝\n' + reset)
+                                continue
+                        else:
+                            print((cyan) + '╔' + '═' * 73 + '╗')
+                            print('║' + red + 'Formato inválido. Tente novamente'.center(73) + cyan + '║')
+                            print('╚' + '═' * 73 + '╝\n' + reset)
+                            continue
+
+                    while True:
+                        sleep(1)
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + purple + 'Digite o ano de inicio de sua contribuição para a previdência [AAAA]: '.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        pessoa["inicio"] = (input())
+                        if len(pessoa["inicio"]) == 4 and pessoa["inicio"].isdigit():
+                            pessoa["inicio"] = int(pessoa["inicio"])
+                            if hj.year - 100 <= pessoa["inicio"] <= hj.year and pessoa["inicio"] >= ano:
+                                break
+                            else:
+                                print((cyan) + '╔' + '═' * 73 + '╗')
+                                print('║' + red + 'Ano de contribuição inválido'.center(73) + cyan + '║')
+                                print('╚' + '═' * 73 + '╝\n' + reset)
+                                continue
+                        else:
+                            print((cyan) + '╔' + '═' * 73 + '╗')
+                            print('║' + red + 'Formato inválido. Tente novamente'.center(73) + cyan + '║')
+                            print('╚' + '═' * 73 + '╝\n' + reset)
+                            continue
+
+                    sleep(1)
+
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + purple + 'Digite seu último sálario: '.center(73) + cyan + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    pessoa["salario"] = (input())
+
+                    while not pessoa["salario"].isdigit():
+                        print((cyan) + '╔' + '═' * 73 + '╗')
+                        print('║' + red + 'Use apenas números'.center(73) + cyan + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(1)
+                        pessoa["salario"] = (input(f"{purple}Digite seu último sálario: {reset}"))
+
+                    pessoa["salario"] = float(pessoa["salario"])
+                    
+                    pessoa["contribuicao"]= hj.year - pessoa["inicio"]
+                    
+                    if pessoa["genero"] == "M":
+                        idademin= 65
+                        contribmin= 20
+                        
+                    elif pessoa["genero"] == "F":
+                        idademin= 62
+                        contribmin= 15
+
+                    if pessoa["idade"] >= idademin and pessoa["contribuicao"] >= contribmin:
+                        pessoa["aposenta"]= hj.year
+
+                    else:
+                        faltaIdade= max(0, idademin - pessoa["idade"])
+                        faltaContrib= max(0, contribmin - pessoa["contribuicao"])
+                        falta= max(faltaIdade, faltaContrib)
+                        pessoa["aposenta"]= hj.year + falta
+                        pessoa["idadeAposenta"] = pessoa["aposenta"] - ano
+                        if ctpsmodelo == "N":
+                            cpf = pessoa["ctps"]
+                            pessoa["ctps"] = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+                        elif ctpsmodelo == "A":
+                            ctps = pessoa["ctps"]
+                            pessoa["ctps"] = f"{ctps[:7]}/{ctps[7:]}"
+                        if pessoa["genero"] == "F":
+                            pessoa["genero"] = "Feminino"
+                        elif pessoa["genero"] == "M":
+                            pessoa["genero"] = "Masculino"
+
+                        sleep(1)
             
+                        sys('cls')
+                        
+                        sleep(1)
+
+                        print((orange) + '╔' + '═' * 73 + '╗')
+                        print('║' + (cyan) + f'Dados do usuário'.center(73) + (orange) + '║')
+                        print('╚' + '═' * 73 + '╝' + reset)
+                        sleep(1)
+                        print(f"{blue}Nome: {pessoa["nome"]}".upper())
+                        sleep(1)
+                        print(f"Gênero cadastrado no cartório: {pessoa["genero"]}".upper())
+                        sleep(1)
+                        print(f"Data de nascimento: {pessoa["nasc"]}".upper())
+                        sleep(1)
+                        print(f"Idade: {pessoa["idade"]} ano(s)".upper())
+                        sleep(1)
+
+                        print(f"Carteira de trabalho: {pessoa["ctps"]}".upper())
+                        sleep(1)
+                        print(f"Ano de inicio do contrato atual: {pessoa["contrato"]}".upper())
+                        sleep(1)
+                        print(f"Ano de inicio de contribuição para a previdência: {pessoa["inicio"]}".upper())
+                        sleep(1)
+                        print(f"Último salário: R${pessoa["salario"]:.2f}".upper())
+                        sleep(1)
+                        print(f"Ano de aposentadoria: {pessoa["aposenta"]}".upper())
+                        sleep(1)
+                        print(f"Idade de aposentadoria: {pessoa["idadeAposenta"]} anos".upper())
+                        sleep(1)
+                        print(f"Foram contribuídos: {pessoa["contribuicao"]} ano(s){reset}".upper())
+                        input("Pressione ENTER para continuar")
+                        sys('cls')
+
+                if ctpsmodelo in ("0", ""):
+
+                    if pessoa["genero"] == "F":
+                        pessoa["genero"] = "Feminino"
+                    elif pessoa["genero"] == "M":
+                        pessoa["genero"] = "Masculino"
+
+                    print((orange) + '╔' + '═' * 73 + '╗')
+                    print('║' + (cyan) + f'Dados do usuário'.center(73) + (orange) + '║')
+                    print('╚' + '═' * 73 + '╝' + reset)
+                    sleep(1)
+                    print(f"{blue}Nome: {pessoa["nome"]}".upper())
+                    sleep(1)
+                    print(f"Gênero cadastrado no cartório: {pessoa["genero"]}".upper())
+                    sleep(1)
+                    print(f"Data de nascimento: {pessoa["nasc"]}".upper())
+                    sleep(1)
+                    print(f"Idade: {pessoa["idade"]} ano(s){reset}".upper())
+                    input("Pressione ENTER para continuar")
+                    sys('cls')
+
+                loop= (input(f"{orange}Deseja cadastrar outra pessoa? [S/N] {reset}").upper())
+
+                while loop not in ("S", "N"):
+                    print(f"{red}Digite uma opção válida{reset}")
+                    sleep(1)
+                    loop= (input(f"{orange}Deseja cadastrar outra pessoa? [S/N] {reset}").upper())
+
+                if loop == "N":
+                    sleep(1)
+                    break
+    
+
+        case "4":
+            
+            jogadores = []  # lista para guardar todos os jogadores
+
+            sys("cls")
+
+            print((cyan) + '╔' + '═' * 73 + '╗')
+            print('║' + (reset) + f'Oi, seja bem-vindo ao gerenciamento de aproveitamento de jogadores!'.center(73) + (cyan) + '║')
+            print('╚' + '═' * 73 + '╝' + reset)
+            sleep(2)
+
+            print((yellow) + "=" * 75)
+
+            while True:
+                sys("cls")
+                print((cyan) + '╔' + '═' * 73 + '╗')
+                print('║' + (reset) + f'Deseja cadastrar algum jogador?'.center(73) + (cyan) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+
+                cadas = input("(S/N): ").upper()
+                if cadas in ["S", "N"]:
+                    break
+                else:
+                    print((red) + '╔' + '═' * 73 + '╗')
+                    print('║' + (yellow) + f"❌ Digite apenas 'S' para sim ou 'N' para não!".center(72) + (red) + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    sleep(2)
+
+            sleep(1)
+
+            while cadas == "S":
+                sys("cls") 
+                jogador = {}   # cria um novo dicionário a cada cadastro
+            
+                # Validação do código
+                while True:
+                    sys("cls")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + f'Digite um código novo de 1 a 999 para o novo jogador'.center(73) + (cyan) + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+
+                    codigo = input()
+                    
+                    if codigo == "0":
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'❌ Não é permitido o número 0.'.center(72) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+
+                    elif codigo.isdigit():
+                        codigo = int(codigo)
+                        
+                        if 1 <= codigo <= 999:
+                            # Verificar se código já existe
+                            codigo_repetido = False
+                            for j in jogadores:
+                                if j["codigo"] == codigo:
+                                    codigo_repetido = True
+                                    break
+                            
+                            if codigo_repetido:
+                                print((red) + '╔' + '═' * 73 + '╗')
+                                print('║' + (yellow) + f'❌ Código {codigo:03} já está em uso!'.center(72) + (red) + '║')
+                                print('╚' + '═' * 73 + '╝\n' + reset)
+                                sleep(2)
+                            else:
+                                jogador["codigo"] = codigo
+                                break
 
 
+                        else:
+                            print((red) + '╔' + '═' * 73 + '╗')
+                            print('║' + (yellow) + f'❌ O código deve estar entre 0 e 999!'.center(72) + (red) + '║')
+                            print('╚' + '═' * 73 + '╝\n' + reset)
+                            sleep(2)
+                            
+                    else:
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'❌ Digite apenas números inteiros!'.center(72) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(2)
+
+                sys("cls")
+                
+                while True:
+                    sys("cls")
+                    print((cyan) + '╔' + '═' * 73 + '╗')
+                    print('║' + (reset) + f'Digite o nome do Jogador'.center(73) + (cyan) + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    
+                    nome_input = input().strip().capitalize()
+
+                    # Verifica se está vazio
+                    if nome_input == "":
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'❌ O nome não pode estar vazio!'.center(73) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(1.5)
+                        continue
+
+                    # Verifica se contém apenas letras e espaços
+                    if nome_input.replace(" ", "").isalpha():
+                        jogador["nome"] = nome_input
+                        break
+                    else:
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'❌ O nome não pode conter números ou caracteres especiais!'.center(72) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        sleep(1.5)
+
+                # Validação das partidas jogadas
+                while True:
+                    sys("cls")
+                    partidas = input(f"{yellow}Digite quantas partidas {jogador['nome']} jogou: {reset}")
+                    if partidas.isdigit():
+                        partidas = int(partidas)
+                        if partidas > 1391:
+                            print((red) + '╔' + '═' * 73 + '╗')
+                            print('║' + (yellow) + f'❌ é bem improvável que {jogador['nome']} tenha jogado essa quantidade de partidas, o recorde é 1,391.'.center(73) + (red) + '║')
+                            print('╚' + '═' * 73 + '╝\n' + reset)
+                        else:
+                            partidas = int(partidas)
+                            break
+                    else:
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'❌  Digite um número válido de partidas.'.center(73) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+
+                
+
+                gols = []
+                for i in range(partidas):
+                    while True:
+                        sys("cls")
+                        g = input(f"{green}Gols na partida {i+1}: {reset}")
+                        if g.isdigit():
+                            g = int(g)
+                            if g > 16:
+                                print((red) + '╔' + '═' * 73 + '╗')
+                                print('║' + (yellow) + f'❌ Quantidade exacerbada de gols, o limite é 16.'.center(72) + (red) + '║')
+                                print('╚' + '═' * 73 + '╝\n' + reset)
+                                sleep(2)
+                            else:
+                                gols.append(int(g))
+                                break
+                        else:
+                            print((red) + '╔' + '═' * 73 + '╗')
+                            print('║' + (yellow) + f'❌ Digite um número inteiro válido.'.center(73) + (red) + '║')
+                            print('╚' + '═' * 73 + '╝\n' + reset)
+                            
+                
+                jogador["partidas_jogadas"] = partidas
+                jogador["gols_partida"] = gols
+                jogador["total_gols"] = sum(gols)
+                
+                jogadores.append(jogador)
+                
+                print((green) + '╔' + '═' * 73 + '╗')
+                print('║' + (green) + f'✅ Jogador cadastrado com sucesso!'.center(72) + (green) + '║')
+                print('╚' + '═' * 73 + '╝\n' + reset)
+                sleep(1)
+
+                
+                
+                # Validação de resposta S/N novamente
+                while True:
+                    sys("cls")
+                    print((orange) + '╔' + '═' * 73 + '╗')
+                    print('║' + (blue) + f'✅ Deseja cadastrar outro jogador? {reset}(S/N) '.center(76) + (orange) + '║')
+                    print('╚' + '═' * 73 + '╝\n' + reset)
+                    cadas = input().upper().strip()
+                    if cadas in ["S", "N"]:
+                        break
+                    else:
+                        print((red) + '╔' + '═' * 73 + '╗')
+                        print('║' + (yellow) + f'❌ Digite apenas "S" ou "N"!'.center(73) + (red) + '║')
+                        print('╚' + '═' * 73 + '╝\n' + reset)
+                        
+
+            # mostra os códigos disponíveis
+
+            respo_jogas = True
+
+            if len(jogadores) > 0:
+                while respo_jogas == True:
+                    sys("cls")
+                    print(f"{blue}📋 Jogadores cadastrados:{reset}\n")
+                    for j in jogadores:
+                        print(f"{cyan}Código {j['codigo']:03} - {j['nome']}{reset}")
+                    
+                    print()
+                    escolha = input(f"{yellow}Digite o código do jogador que deseja visualizar:{reset} ")
+
+                    if escolha.isdigit():
+                        escolha = int(escolha)
+                        encontrado = False
+                        for j in jogadores:
+                            if j["codigo"] == escolha:
+                                encontrado = True
+                                print(f"\n{green}🔍 Detalhes do jogador:{reset}")
+                                print(f"{blue}Código: {reset}{j['codigo']:03}")
+                                print(f"{blue}Nome: {reset}{j['nome']}")
+                                print(f"{blue}Partidas jogadas: {reset}{j['partidas_jogadas']}")
+                                print(f"{blue}Gols por partida: {reset}{j['gols_partida']}")
+                                print(f"{blue}Total de gols: {reset}{j['total_gols']}")
+                                
+                                pergunta = str()
+                                while pergunta != 'N' and pergunta != "S":
+                                    print((orange) + '╔' + '═' * 73 + '╗')
+                                    print('║' + (blue) + f'Deseja analisar mais algum jogador?: {reset}(S/N) '.center(77) + (orange) + '║')
+                                    print('╚' + '═' * 73 + '╝\n' + reset)
+                                    pergunta = str(input()).strip().upper()
+
+                                    if pergunta == "N":
+                                        respo_jogas = False
+                                    elif pergunta == "S":
+                                        respo_jogas == True
+                                        sleep(0.5)
+                                    else:
+                                        print(f"{red}Resposta Inválida, tente novamente" + reset)
+                                        sleep(2)
+                                        sys("cls")
+                                        
+                        if not encontrado:
+                            print(f"{red}❌ Nenhum jogador encontrado com esse código.{reset}")
+                            sleep(1.5)
+                    else:
+                        print(f"{red}❌ Código inválido! Digite apenas números.{reset}")
+                        sleep(1.5)
+
+            else:
+                print(f"{red}⚠ Nenhum jogador foi cadastrado!{reset}")
+
+        case "5":
             sys("cls")
 
             pessoadic = dict()
             pessoaslist = list()
             loop5 = True
 
-
+            print(cyan + bold + '╔' + '═' * 73 + '╗')
+            print('║' + (yellow) + f'O programa irá ler: nome, sexo e idade de várias pessoas.'.center(73) + (cyan) + '║')
+            print('║' + ' ' * 73 + cyan + '║')
+            print('║' + (orange) + f'No final ele mostrará:'.center(73) + (cyan) + '║')
+            print('║' + (blue) + f'Quantas pessoas foram cadastradas.'.center(73) + (cyan) + '║')
+            print('║' + (blue) + f'A média de idade.'.center(73) + (cyan) + '║')
+            print('║' + (blue) + f'Uma lista com as mulheres.'.center(73) + (cyan) + '║')
+            print('║' + (blue) + f'Uma lista de pessoas com idade acima da média.'.center(73) + (cyan) + '║')
+            print('║' + ' ' * 73 + cyan + '║')
+            print('║' + (purple) + f'Pressione ENTER para continuar...'.center(73) + (cyan) + '║')
+            print('╚' + '═' * 73 + '╝' + reset)
+            input("")
 
             while loop5 == True:
                 sys('cls')
+                
                 user_respo = str()
 
                 loop_nome = False
                 while loop_nome == False:
+                    
+
+                    sys('cls')
 
                     print((cyan) + '╔' + '═' * 73 + '╗')
                     print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
                     print('╚' + '═' * 73 + '╝' + reset)
-                    entradanome = str(input("Digite o nome do individuo: ")).capitalize()
+                    entradanome = str(input("Digite o nome do individuo: ")).strip().capitalize()
 
                     if entradanome.replace(" ", "").isalpha():
                         pessoadic['nome'] = entradanome
@@ -215,7 +954,7 @@ while looppai == True:
                     print('║' + (reset) + f'Insira o dados do usuário a ser cadastrado'.center(73) + (cyan) + '║')
                     print('╚' + '═' * 73 + '╝' + reset)
                     
-                    entradaIdade = (input("Digite a idade do Individuo: "))
+                    entradaIdade = input("Digite a idade do Individuo: ").strip()
                     sys("cls")
 
                     if entradaIdade.isdigit():
@@ -361,11 +1100,12 @@ while looppai == True:
                 print('║' + (reset) + f'Essa lista possuí apenas 1 candidato, logo ninguém está acima da média.'.center(73) + (purple) + '║')
                 print('╚' + '═' * 73 + '╝\n' + reset)
                 verificar = True
+            print("")
 
-        case "6":
-            6
+        case "0":
+            looppai = False
+            continue
             
-    
     escolha = str()
 
     while escolha != "1" and escolha != "2" and escolha != "3":
@@ -401,12 +1141,12 @@ print('║' + blue + 'Luis Pozenato'.center(73) + cyan + '║')
 print('║' + ' ' * 73 + cyan + '║')
 
 print('║' + yellow + 'Programa 1'.center(73) + cyan + '║')
-print('║' + blue + 'Glauber Almeida Brito'.center(73) + cyan + '║')
+print('║' + blue + 'Glauber Almeida de Brito'.center(73) + cyan + '║')
 print('║' + ' ' * 73 + cyan + '║')
 
 
 print('║' + yellow + 'Programa 2'.center(73) + cyan + '║')
-print('║' + blue + 'Glauber Almeida Brito'.center(73) + cyan + '║')
+print('║' + blue + 'Glauber Almeida de Brito'.center(73) + cyan + '║')
 print('║' + ' ' * 73 + cyan + '║')
 
 print('║' + yellow + 'Programa 3'.center(73) + cyan + '║')
