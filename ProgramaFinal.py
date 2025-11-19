@@ -92,8 +92,8 @@ while looppai == True:
             print(cyan + bold + '╔' + '═' * 73 + '╗')
             print('║' + white + f'Insira o dados do usuário'.center(73) + cyan + '║')
             print('╚' + '═' * 73 + '╝' + reset)
-            usernamelogin = input("Digite o nome do usuário: ")
-            senhalogin = input("Digite a senha: ")
+            usernamelogin = input("Digite o nome do usuário: ").strip()
+            senhalogin = input("Digite a senha: ").strip()
             login_valido = False
 
             for usuario in usuarios_cadastrados:
@@ -112,8 +112,8 @@ while looppai == True:
             print(cyan + bold + '╔' + '═' * 73 + '╗')
             print('║' + white + f'Insira o dados do usuário a ser cadastrado'.center(73) + cyan + '║')
             print('╚' + '═' * 73 + '╝' + reset)
-            username = input("Digite o nome do usuário: ")
-            senha = input("Digite a senha: ")
+            username = input("Digite o nome do usuário: ").strip()
+            senha = input("Digite a senha: ").strip()
             existe = False
 
             for usuario in usuarios_cadastrados:
@@ -209,7 +209,7 @@ while looppai == True:
             cadastrar = False
             analisar = False
             avaliar = False
-
+        
             while loop_ex1:
                 if not skip:
                     limpar()
@@ -217,17 +217,20 @@ while looppai == True:
                     print(cyan + '╔' + '═' * 73 + '╗')
                     print('║' + yellow + 'O que deseja fazer?'.center(73) + cyan + '║')
                     print('╠' + '═' * 73 + '╣')
+                    print('║' + reset + '0 - Encerrar tarefa'.center(73) + cyan + '║')
                     print('║' + reset + '1 - Cadastrar alunos'.center(73) + cyan + '║')
                     print('║' + reset + '2 - Analisar alunos'.center(73) + cyan + '║')
                     print('║' + reset + '3 - Avaliar alunos'.center(73) + cyan + '║')
+                    
                     print('╚' + '═' * 73 + '╝' + reset)
                     resposta = str(input('Digite sua resposta - (1/2/3): ')).strip()
 
-                    while resposta not in ['1', '2', '3']:
+                    while resposta not in ['0', '1', '2', '3']:
                         limpar()
                         print(cyan + '╔' + '═' * 73 + '╗')
                         print('║' + yellow + 'O que deseja fazer?'.center(73) + cyan + '║')
                         print('╠' + '═' * 73 + '╣')
+                        print('║' + reset + '0 - Encerrar o programa'.center(73) + cyan + '║')
                         print('║' + reset + '1 - Cadastrar alunos'.center(73) + cyan + '║')
                         print('║' + reset + '2 - Analisar alunos'.center(73) + cyan + '║')
                         print('║' + reset + '3 - Avaliar alunos'.center(73) + cyan + '║')
@@ -251,6 +254,10 @@ while looppai == True:
                             analisar = False
                             avaliar = True
                             resposta = ''
+                        case '0':
+                            loop_ex1 = False
+                            
+
 
                 while cadastrar:
                     limpar()
@@ -2611,7 +2618,7 @@ while looppai == True:
                                 print((cyan) + '╔' + '═' * 73 + '╗')
                                 print('║' + red + 'O número da CTPS deve ter exatamente 7 dígitos numéricos. Tente novamente'.center(73) + cyan + '║')
                                 print('╚' + '═' * 73 + '╝\n' + reset)
-                                
+
                         print("")
 
                         while True:
@@ -2921,7 +2928,7 @@ while looppai == True:
                             print((red) + '╔' + '═' * 94 + '╗')
                             print('║' + (yellow) + f'❌ é bem improvável que {jogador['nome']} tenha jogado essa quantidade de partidas, o recorde é 1,391.'.center(93) + (red) + '║')
                             print('╚' + '═' * 94 + '╝\n' + reset)
-                            sleep(1.5)
+                            sleep(3)
                         else:
                             partidas = int(partidas)
                             break
@@ -2944,7 +2951,7 @@ while looppai == True:
                                 print((red) + '╔' + '═' * 73 + '╗')
                                 print('║' + (yellow) + f'❌ Quantidade exacerbada de gols, o limite é 16.'.center(72) + (red) + '║')
                                 print('╚' + '═' * 73 + '╝\n' + reset)
-                                sleep(2)
+                                sleep(3)
                             else:
                                 gols.append(int(g))
                                 break
@@ -2952,7 +2959,7 @@ while looppai == True:
                             print((red) + '╔' + '═' * 73 + '╗')
                             print('║' + (yellow) + f'❌ Digite um número inteiro válido.'.center(72) + (red) + '║')
                             print('╚' + '═' * 73 + '╝\n' + reset)
-                            sleep(1.5)
+                            sleep(2)
                             
                 
                 jogador["partidas_jogadas"] = partidas
@@ -2964,7 +2971,7 @@ while looppai == True:
                 print((green) + '╔' + '═' * 73 + '╗')
                 print('║' + (green) + f'✅ Jogador cadastrado com sucesso!'.center(72) + (green) + '║')
                 print('╚' + '═' * 73 + '╝\n' + reset)
-                sleep(1)
+                sleep(1.5)
 
                 
                 
@@ -3188,6 +3195,7 @@ while looppai == True:
                         print((red) + '╔' + '═' * 73 + '╗')
                         print('║' + (yellow) + f'Resposta inválida, tente novamente'.center(73) + (red) + '║')
                         print('╚' + '═' * 73 + '╝' + reset)
+                        input("Pressione ENTER para continuar...")
 
             limpar()
 
@@ -3302,7 +3310,7 @@ while looppai == True:
 
 limpar()
 print(cyan + bold + '╔' + '═' * 73 + '╗')
-print('║' + white + 'Tarefa encerrada'.center(73) + cyan + '║')
+print('║' + white + 'Programa encerrado'.center(73) + cyan + '║')
 print('╠' + '═' * 73 + '╣')
 print('║' + green + 'Obrigado pela preferência!'.center(73) + cyan + '║')
 print('║' + ' ' * 73 + cyan + '║')
